@@ -20,21 +20,6 @@
 	  (set-marker (process-mark proc) (point)))
 	(if moving (goto-char (process-mark proc)))))))
 
-;; filter function for control characters
-(require 'esh-mode)
-(require 'esh-proc)
-(defun eshell-filter (proc string)
-  "Filter STRING from the output of PROC using eshell filter."
-  (when (buffer-live-p (process-buffer proc))
-    (with-current-buffer (process-buffer proc)
-      (let ((moving (= (point) (process-mark proc))))
-	(save-excursion
-	  (goto-char (process-mark proc))
-	  (let ((inhibit-read-only t))
-	    (eshell-interactive-process-filter proc string))
-	  (set-marker (process-mark proc) (point)))
-	(if moving (goto-char (process-mark proc)))))))
-
 
 ;; clash
 (defun start-clash ()
@@ -57,15 +42,12 @@
   (let* ((name (concat "mpv: " path))
 	 (buf (get-buffer-create name)))
     (with-current-buffer buf
-      ;; (comint-mode)
-      (set (make-local-variable 'eshell-last-input-start) (point-marker))
-      (set (make-local-variable 'eshell-last-input-end) (point-marker))
-      (set (make-local-variable 'eshell-last-output-start) (point-marker))
-      (set (make-local-variable 'eshell-last-output-end) (point-marker))
-      (set (make-local-variable 'eshell-last-output-block-begin) (point)))
+      (comint-mode)
+      (display-line-numbers-mode -1))
     (set-process-filter
-     (start-process name buf "/opt/homebrew/bin/mpv" "--quiet" path)
-     #'eshell-filter)))
+     (start-process name buf "/opt/homebrew/bin/mpv"
+		    "--quiet" (expand-file-name path))
+     #'ansi-filter)))
 
 
 ;; pyfmt
