@@ -45,7 +45,7 @@
       (comint-mode)
       (display-line-numbers-mode -1))
     (set-process-filter
-     (start-process name buf "/opt/homebrew/bin/mpv"
+     (start-process name buf "/usr/local/bin/mpv"
 		    "--quiet" (expand-file-name path))
      #'ansi-filter)))
 
