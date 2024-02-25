@@ -669,9 +669,13 @@
   (org-src-preserve-indentation t)
   ;; color latex code in org
   (org-highlight-latex-and-related '(latex))
+  ;; latex pdf
+  (org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
+  ;; latex packages
+  (org-latex-packages-alist
+   (list (list "" (expand-file-name "~/Dropbox/assets/latex-sty/math") t)))
   ;; use zotero styles for csl exports
   (org-cite-csl-styles-dir (expand-file-name "~/Zotero/styles/"))
-  (org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
   ;; use id to insert link
   (org-id-link-to-org-use-id 'create-if-interactive)
   :config
@@ -754,6 +758,48 @@
   :defer t)
 
 
+;; use AUCTeX
+(defun zq/org-latex-preview-scale-fn ()
+  "Org LaTeX preview scale function."
+  (* (/ 10.0
+	(preview-document-pt))
+     preview-scale))
+
+(use-package auctex
+  :elpaca (auctex :pre-build (("./autogen.sh")
+			      ("./configure"
+			       "--without-texmf-dir"
+			       "--with-lispdir=./")
+			      ("make")))
+  :mode ("\\.tex\\'" . LaTeX-mode)
+  :init
+  (setq-default preview-scale 1.5
+		preview-scale-function #'zq/org-latex-preview-scale-fn)
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq preview-auto-cache-preamble nil)
+  :hook
+  (LaTeX-mode . turn-on-auto-fill))
+
+(use-package reftex
+  :elpaca nil
+  :custom
+  (reftex-plug-into-AUCTeX t)
+  (reftex-default-bibliography (list (expand-file-name "~/Dropbox/refs.bib")))
+  :hook
+  (LaTeX-mode . turn-on-reftex))
+
+;; need to first open a .tex file to load this package
+;; how to automatically load AUCTeX when calling `org-auctex-mode'?
+(use-package org-auctex
+  :elpaca nil
+  :load-path "lisp"
+  :after tex)
+
+;; citation
+
+
 
 ;;;========================
 ;;; everyday use
@@ -764,6 +810,12 @@
   :load-path "lisp"
   :config
   (add-hook 'elpaca-after-init-hook #'start-clash))
+
+
+(defun open-my-config ()
+  "Open my init.el."
+  (interactive)
+  (find-file (expand-file-name "init.el" user-emacs-directory)))
 
 
 (defun open-my-agenda ()
