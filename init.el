@@ -691,6 +691,8 @@
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
   (setq org-agenda-files (list (expand-file-name
 				"~/Dropbox/org-my-life/my-life.org")))
+  :bind
+  (("C-c l C-l" . org-store-link))
   :hook
   (org-mode . prettify-my-org))
 
