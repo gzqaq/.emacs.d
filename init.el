@@ -663,6 +663,40 @@
   (setq markdown-command "multimarkdown"))
 
 
+;; latex
+;; use AUCTeX
+(defun zq/org-latex-preview-scale-fn ()
+  "Org LaTeX preview scale function."
+  (* (/ 10.0
+	(preview-document-pt))
+     preview-scale))
+
+(use-package auctex
+  :elpaca (auctex :pre-build (("./autogen.sh")
+			      ("./configure"
+			       "--without-texmf-dir"
+			       "--with-lispdir=./")
+			      ("make")))
+  :mode ("\\.tex\\'" . LaTeX-mode)
+  :init
+  (setq-default preview-scale 1.2
+		preview-scale-function #'zq/org-latex-preview-scale-fn)
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq preview-auto-cache-preamble nil)
+  :hook
+  (LaTeX-mode . turn-on-auto-fill))
+
+(use-package reftex
+  :elpaca nil
+  :custom
+  (reftex-plug-into-AUCTeX t)
+  (reftex-default-bibliography (list (expand-file-name "~/Dropbox/refs.bib")))
+  :hook
+  (LaTeX-mode . turn-on-reftex))
+
+
 
 ;;;========================
 ;;; org-mode
@@ -782,39 +816,7 @@
   :ensure t
   :defer t)
 
-
-;; use AUCTeX
-(defun zq/org-latex-preview-scale-fn ()
-  "Org LaTeX preview scale function."
-  (* (/ 10.0
-	(preview-document-pt))
-     preview-scale))
-
-(use-package auctex
-  :elpaca (auctex :pre-build (("./autogen.sh")
-			      ("./configure"
-			       "--without-texmf-dir"
-			       "--with-lispdir=./")
-			      ("make")))
-  :mode ("\\.tex\\'" . LaTeX-mode)
-  :init
-  (setq-default preview-scale 1.5
-		preview-scale-function #'zq/org-latex-preview-scale-fn)
-  :config
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
-  (setq preview-auto-cache-preamble nil)
-  :hook
-  (LaTeX-mode . turn-on-auto-fill))
-
-(use-package reftex
-  :elpaca nil
-  :custom
-  (reftex-plug-into-AUCTeX t)
-  (reftex-default-bibliography (list (expand-file-name "~/Dropbox/refs.bib")))
-  :hook
-  (LaTeX-mode . turn-on-reftex))
-
+;; use auctex preview
 ;; need to first open a .tex file to load this package
 ;; how to automatically load AUCTeX when calling `org-auctex-mode'?
 (use-package org-auctex
