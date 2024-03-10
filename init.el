@@ -825,6 +825,19 @@
   :after tex)
 
 ;; citation
+(use-package citar
+  :ensure t
+  :defer t
+  :custom
+  (org-cite-global-bibliography (list (expand-file-name "~/Dropbox/refs.bib")))
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+  (citar-bibliography org-cite-global-bibliography)
+  (citar-citeproc-csl-styles-dir (expand-file-name "~/Zotero/styles"))
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup))
 
 
 
