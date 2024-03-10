@@ -640,6 +640,21 @@
   (org-babel-execute:python))
 
 
+
+;; rust
+(use-package rustic
+  :ensure t
+  :defer t
+  :custom
+  (rustic-lsp-client 'eglot))
+
+(use-package cargo
+  :ensure t
+  :defer t
+  :hook
+  ((rust-ts-mode rustic-mode) . cargo-minor-mode))
+
+
 ;; markdown
 (use-package markdown-mode
   :ensure t
