@@ -719,7 +719,7 @@
 ;;; org-mode
 ;;;========================
 
-(defun prettify-my-org ()
+(defun zq/prettify-org ()
   "Use `variable-pitch-mode'.  Set `fill-column' to 100."
   (variable-pitch-mode t)
   (setq-local fill-column 100))
@@ -760,7 +760,7 @@
   :bind
   (("C-c l C-l" . org-store-link))
   :hook
-  (org-mode . prettify-my-org))
+  (org-mode . zq/prettify-org))
 
 ;; modern look
 (use-package org-modern
