@@ -93,7 +93,7 @@
   (set-face-attribute 'variable-pitch nil :family "Open Sans" :height 135 :weight 'regular)
   (set-fontset-font "fontset-default" 'han (font-spec :family "PingFang SC"))
   (set-fontset-font "fontset-default" 'cjk-misc (font-spec :family "PingFang SC"))
-  (set-fontset-font "fontset-default" 'devanagari (font-spec :family "Noto Sans Devanagari"))
+  (set-fontset-font "fontset-default" 'devanagari (font-spec :family "Lava Devanagari"))
   ;; precision scrolling
   (pixel-scroll-precision-mode 1)
   ;; no need to have an elisp buffer when starting up
