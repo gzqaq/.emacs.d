@@ -655,6 +655,23 @@
   ((rust-ts-mode rustic-mode) . cargo-minor-mode))
 
 
+
+;; yaml
+(defun zq/yaml-map ()
+  "Define map for yaml-mode."
+  (define-key yaml-mode-map "\C-m" 'newline-and-indent))
+
+(use-package yaml-mode
+  :ensure t
+  :delight
+  :mode
+  ("\\.yml\\'" . yaml-mode)
+  ("\\.yaml\\'" . yaml-mode)
+  :hook
+  (yaml-mode . zq/yaml-map))
+
+
+
 ;; markdown
 (use-package markdown-mode
   :ensure t
