@@ -204,6 +204,16 @@
 
 
 ;; modus-theme
+
+;; use emacs+'s `ns-system-appearance-change-functions' to toggle light/dark
+(defun zq/apply-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme 'modus-operandi :no-confirm))
+    ('dark (load-theme 'modus-vivendi :no-confirm)))
+  (message "Theme toggled!"))
+
 (use-package modus-themes
   :ensure t
   :init
@@ -226,7 +236,7 @@
 		(3 . (overline 1.1))
 		(t . (monochrome)))))
   :config
-  (load-theme 'modus-operandi :no-confirm)
+  (add-hook 'ns-system-appearance-change-functions #'zq/apply-theme)
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
 
