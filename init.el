@@ -7,12 +7,12 @@
 ;;; Code:
 
 ;; Elpaca installer
-(defvar elpaca-installer-version 0.6)
+(defvar elpaca-installer-version 0.7)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-			      :ref nil
+			      :ref nil :depth 1
 			      :files (:defaults "elpaca-test.el" (:exclude "extensions"))
 			      :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
@@ -25,8 +25,10 @@
     (when (< emacs-major-version 28) (require 'subr-x))
     (condition-case-unless-debug err
 	(if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-		 ((zerop (call-process "git" nil buffer t "clone"
-				       (plist-get order :repo) repo)))
+		 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+						 ,@(when-let ((depth (plist-get order :depth)))
+						     (list (format "--depth=%d" depth) "--no-single-branch"))
+						 ,(plist-get order :repo) ,repo))))
 		 ((zerop (call-process "git" nil buffer t "checkout"
 				       (or (plist-get order :ref) "--"))))
 		 (emacs (concat invocation-directory invocation-name))
@@ -46,10 +48,8 @@
 
 ;; install use-package support
 (elpaca elpaca-use-package
-  ;; enable `:elpaca' use-package keyword.
-  (elpaca-use-package-mode)
-  ;; assume :elpaca t unless otherwise specified.
-  (setq elpaca-use-package-by-default t))
+  ;; Enable use-package :ensure support for Elpaca.
+  (elpaca-use-package-mode))
 
 ;; block until current queue processed.
 (elpaca-wait)
@@ -82,7 +82,7 @@
 ;;;========================
 
 (use-package emacs
-  :elpaca nil
+  :ensure nil
   :init
   ;; utf-8 encoding
   (set-language-environment "UTF-8")
@@ -147,7 +147,7 @@
 
 ;; automatically pair delimiters
 (use-package elec-pair
-  :elpaca nil
+  :ensure nil
   :defer t
   :config
   (defun elec-pair-local-text-mode ()
@@ -190,7 +190,7 @@
 
 ;; show function arglist or variable docstring in echo area
 (use-package eldoc
-  :elpaca nil
+  :ensure nil
   :delight)
 
 ;; displays key bindings following currently entered incomplete command
@@ -530,7 +530,7 @@
   :defer t)
 
 (use-package treesit
-  :elpaca nil
+  :ensure nil
   :commands
   (treesit-install-language-grammar nf/treesit-install-all-languages)
   :init
@@ -562,11 +562,10 @@
 	(sit-for 0.75)))))
 
 (use-package combobulate
-  :after treesit
-  :ensure t
-  :defer t
-  :elpaca (:host github :repo "mickeynp/combobulate"
+  :ensure (:host github :repo "mickeynp/combobulate"
 		 :depth 1 :main "combobulate.el")
+  :after treesit
+  :defer t
   :init
   (setq combobulate-key-prefix "C-c o")
   :hook
@@ -574,7 +573,7 @@
 
 ;; eglot
 (use-package eglot
-  :elpaca nil
+  :ensure nil
   :defer t
   :custom
   (eldoc-echo-area-use-multiline-p t)
@@ -601,7 +600,7 @@
 
 ;; python
 (use-package python
-  :elpaca nil
+  :ensure nil
   :defer t
   :config
   ;; remove guess indent message
@@ -634,7 +633,7 @@
 
 ;; python in org
 (use-package ob-python
-  :elpaca nil
+  :ensure nil
   :defer t
   :commands
   (org-babel-execute:python))
@@ -690,7 +689,7 @@
      preview-scale))
 
 (use-package auctex
-  :elpaca (auctex :pre-build (("./autogen.sh")
+  :ensure (auctex :pre-build (("./autogen.sh")
 			      ("./configure"
 			       "--without-texmf-dir"
 			       "--with-lispdir=./")
@@ -707,7 +706,7 @@
   (LaTeX-mode . turn-on-auto-fill))
 
 (use-package reftex
-  :elpaca nil
+  :ensure nil
   :custom
   (reftex-plug-into-AUCTeX t)
   (reftex-default-bibliography (list (expand-file-name "~/Dropbox/refs.bib")))
@@ -726,7 +725,7 @@
   (setq-local fill-column 100))
 
 (use-package org
-  :elpaca nil
+  :ensure nil
   :defer t
   :custom
   (org-imenu-depth 7)
@@ -838,7 +837,7 @@
 ;; need to first open a .tex file to load this package
 ;; how to automatically load AUCTeX when calling `org-auctex-mode'?
 (use-package org-auctex
-  :elpaca nil
+  :ensure nil
   :load-path "lisp"
   :after tex)
 
@@ -864,7 +863,7 @@
 ;;;========================
 
 (use-package commandline
-  :elpaca nil
+  :ensure nil
   :load-path "lisp"
   :config
   (add-hook 'elpaca-after-init-hook #'start-clash))
