@@ -709,7 +709,8 @@
 		  :build (:not elpaca--compile-info) ;; Make will take care of this step
 		  :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
 		  :version (lambda (_) (require 'tex-site) AUCTeX-version))
-  :mode ("\\.tex\\'" . LaTeX-mode)
+  ;; don't know why :mode fails
+  ;; :mode ("\\.tex\\'" . LaTeX-mode)
   :init
   (setq-default preview-scale 1.2
 		preview-scale-function #'zq/org-latex-preview-scale-fn)
@@ -718,6 +719,8 @@
   (setq TeX-parse-self t)
   (setq preview-auto-cache-preamble nil)
   :hook
+  ;; temporarily use latex-mode-hook to enable AUCTeX
+  (latex-mode . LaTeX-mode)
   (LaTeX-mode . turn-on-auto-fill))
 
 (use-package reftex
