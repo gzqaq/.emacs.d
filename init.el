@@ -65,11 +65,12 @@
 ;;   :after use-package)
 
 ;; set paths correctly
-(use-package exec-path-from-shell
-  :ensure t
-  :demand t ; help emacs find libgccjit.so installed by homebrew
-  :config
-  (add-hook 'after-init-hook #'exec-path-from-shell-initialize))
+;; unnecessary since Emacs+ inject `PATH' by default
+;; (use-package exec-path-from-shell
+;;   :ensure t
+;;   :demand t ; help emacs find libgccjit.so installed by homebrew
+;;   :config
+;;   (add-hook 'after-init-hook #'exec-path-from-shell-initialize))
 
 ;; block until current queue processed.
 ;; necessary to use these keywords at the top-level.
