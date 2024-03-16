@@ -715,10 +715,15 @@
   :init
   (setq-default preview-scale 1.2
 		preview-scale-function #'zq/org-latex-preview-scale-fn)
-  :config
+  ;; :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
   (setq preview-auto-cache-preamble nil)
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+	TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+	TeX-source-correlate-start-server t)
+  (setq TeX-source-correlate-mode t)
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
   :hook
   ;; temporarily use latex-mode-hook to enable AUCTeX
   (latex-mode . LaTeX-mode)
@@ -731,6 +736,19 @@
   (reftex-default-bibliography (list (expand-file-name "~/Dropbox/refs.bib")))
   :hook
   (LaTeX-mode . turn-on-reftex))
+
+;; better pdf reader
+(use-package pdf-tools
+  :ensure t
+  :defer t
+  :magic ("%PDF" . pdf-view-mode)
+  :config
+  (pdf-tools-install :no-query)  ;; build necessary tool if missing
+  :custom
+  (pdf-view-display-size 'fit-page)
+  :hook
+  ;; auto toggle light/dark
+  (pdf-view-mode . pdf-view-themed-minor-mode))
 
 
 
