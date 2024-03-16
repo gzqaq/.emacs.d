@@ -693,8 +693,12 @@
   :ensure (auctex :pre-build (("./autogen.sh")
 			      ("./configure"
 			       "--without-texmf-dir"
-			       "--with-lispdir=./")
-			      ("make")))
+			       "--with-packagelispdir=./"
+			       "--with-packagedatadir=./")
+			      ("make"))
+		  :build (:not elpaca--compile-info) ;; Make will take care of this step
+		  :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
+		  :version (lambda (_) (require 'tex-site) AUCTeX-version))
   :mode ("\\.tex\\'" . LaTeX-mode)
   :init
   (setq-default preview-scale 1.2
