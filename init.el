@@ -182,6 +182,7 @@
   "Disable line numbers.  To be added in hooks."
   (display-line-numbers-mode 0))
 (dolist (mode '(org-mode-hook
+		xwidget-webkit-mode-hook
 		pdf-view-mode-hook
 		term-mode-hook
 		shell-mode-hook
@@ -897,6 +898,10 @@
   "Open agenda file."
   (interactive)
   (find-file (expand-file-name "~/Dropbox/org-my-life/my-life.org")))
+
+
+;; use xwidget-webkit to open link
+(setq browse-url-browser-function 'xwidget-webkit-browse-url)
 
 
 
