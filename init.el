@@ -517,8 +517,7 @@
   :delight
   :init (global-wakatime-mode)
   :config
-  (setq wakatime-cli-path (expand-file-name "~/.wakatime/wakatime-cli"))
-  (setq wakatime-api-key "***REMOVED***"))
+  (setq wakatime-cli-path (expand-file-name "~/.wakatime/wakatime-cli")))
 
 ;; syntax check
 (use-package flycheck
