@@ -921,6 +921,15 @@
 (setq browse-url-browser-function 'xwidget-webkit-browse-url)
 
 
+;; backup in the same location
+(setq backup-directory-alist '(("." . "/private/tmp/emacs-backup"))
+      backup-by-copying t
+      version-control t
+      delete-old-versions t
+      kept-new-versions 20
+      kept-old-versions 5)
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
