@@ -900,9 +900,7 @@
 
 (use-package commandline
   :ensure nil
-  :load-path "lisp"
-  :config
-  (add-hook 'elpaca-after-init-hook #'start-clash))
+  :load-path "lisp")
 
 
 (defun open-my-config ()
@@ -926,8 +924,8 @@
       backup-by-copying t
       version-control t
       delete-old-versions t
-      kept-new-versions 20
-      kept-old-versions 5)
+      kept-new-versions 7
+      kept-old-versions 3)
 
 
 
