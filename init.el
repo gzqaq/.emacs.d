@@ -170,6 +170,9 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 
+;; never use tabs for indentation
+(setq-default indent-tabs-mode nil)
+
 ;; colorful delimiters
 (use-package rainbow-delimiters
   :ensure t
