@@ -747,10 +747,7 @@
   :config
   (pdf-tools-install :no-query)  ;; build necessary tool if missing
   :custom
-  (pdf-view-display-size 'fit-page)
-  :hook
-  ;; auto toggle light/dark
-  (pdf-view-mode . pdf-view-themed-minor-mode))
+  (pdf-view-display-size 'fit-page))
 
 
 
