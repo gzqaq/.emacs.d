@@ -123,6 +123,8 @@
   (global-hl-line-mode 1)
   ;; lockfiles kill `npm start'
   (setq create-lockfiles nil)
+  :bind
+  ("C-c e" . eshell)
   :config
   ;; no ringing
   (setq ring-bell-function #'ignore)
