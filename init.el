@@ -760,7 +760,8 @@
 (defun zq/prettify-org ()
   "Use `variable-pitch-mode'.  Set `fill-column' to 100."
   (variable-pitch-mode t)
-  (setq-local fill-column 100))
+  (setq-local fill-column 100)
+  (setq-local line-spacing 0.3))
 
 (use-package org
   :ensure nil
@@ -771,6 +772,8 @@
   (org-fontify-quote-and-verse-blocks t)
   (org-fontify-whole-heading-line nil)
   (org-fontify-whole-block-delimiter-line t)
+  (org-special-ctrl-a/e t)
+  (org-hide-emphasis-markers t)
   ;; don't prompt before running code in org
   (org-confirm-babel-evaluate nil)
   ;; use syntax highlighting in source blocks when editing
