@@ -89,9 +89,9 @@
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8-unix)
   ;; fonts
-  (set-face-attribute 'default nil :family "Intel One Mono" :height 130 :weight 'regular)
-  (set-face-attribute 'fixed-pitch nil :family "SF Mono" :height 130 :weight 'regular)
-  (set-face-attribute 'variable-pitch nil :family "Open Sans" :height 135 :weight 'regular)
+  (set-face-attribute 'default nil :family "Intel One Mono" :height 120 :weight 'regular)
+  (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
   (set-fontset-font "fontset-default" 'han (font-spec :family "PingFang SC"))
   (set-fontset-font "fontset-default" 'cjk-misc (font-spec :family "PingFang SC"))
   (set-fontset-font "fontset-default" 'devanagari (font-spec :family "Lava Devanagari"))
@@ -807,6 +807,8 @@
 (use-package org-modern
   :ensure t
   :defer t
+  :config
+  (set-face-attribute 'org-modern-symbol nil :family "Iosevka" :height 120 :weight 'regular)
   :custom
   (org-modern-table nil)
   :hook
