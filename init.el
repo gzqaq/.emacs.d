@@ -808,7 +808,8 @@
   (setq org-agenda-files (list (expand-file-name
 				"~/Dropbox/org-my-life/my-life.org")))
   :bind
-  (("C-c l C-l" . org-store-link))
+  (("C-c l C-l" . org-store-link)
+   ("C-c a" . org-agenda))
   :hook
   (org-mode . zq/prettify-org))
 
