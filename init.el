@@ -905,6 +905,7 @@
   (org-cite-activate-processor 'citar)
   (citar-bibliography org-cite-global-bibliography)
   (citar-citeproc-csl-styles-dir (expand-file-name "~/Zotero/styles"))
+  (citar-library-paths (list (expand-file-name "~/Dropbox/zotero-attachments/")))
   :hook
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup))
