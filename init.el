@@ -457,12 +457,21 @@
   )
 
 ;; quick jump and act
+(defun avy-action-helpful (pt)
+  "Look up a symbol at PT via avy."
+  (save-excursion (goto-char pt)
+                  (helpful-at-point))
+  (select-window (cdr (ring-ref avy-ring 0)))
+  t)
+
 (use-package avy
   :ensure t
   :demand t
   :bind
   (("C-c j" . avy-goto-line)
-   ("C-c k" . avy-goto-char-timer)))
+   ("C-c k" . avy-goto-char-timer))
+  :config
+  (setf (alist-get ?H avy-dispatch-alist) 'avy-action-helpful))
 
 ;; save command history
 ;; show the most common one first
