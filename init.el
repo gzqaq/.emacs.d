@@ -884,7 +884,7 @@
 ;; org to epub
 (use-package ox-epub
   :ensure t
-  :defer t)
+  :after org)
 
 ;; use auctex preview
 ;; need to first open a .tex file to load this package
