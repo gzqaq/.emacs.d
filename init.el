@@ -525,6 +525,10 @@
   :bind
   ("C-x g" . magit-status))
 
+(use-package transient
+  :ensure t
+  :defer t)
+
 ;; wakatime
 (use-package wakatime-mode
   :ensure t
