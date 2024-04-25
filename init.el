@@ -500,6 +500,8 @@
 ;; switch between multiple windows
 (use-package ace-window
   :ensure t
+  :custom
+  (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
   :bind
   ("C-x o" . ace-window))
 
