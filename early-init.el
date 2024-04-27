@@ -17,6 +17,7 @@
 (setq package-enable-at-startup nil)
 
 ;; disable some UI features early
+(add-to-list 'default-frame-alist '(undecorated-round . t))  ;; no title bar
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
