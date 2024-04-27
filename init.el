@@ -471,7 +471,9 @@
   (("C-c j" . avy-goto-line)
    ("C-c k" . avy-goto-char-timer))
   :config
-  (setf (alist-get ?H avy-dispatch-alist) 'avy-action-helpful))
+  (setf (alist-get ?H avy-dispatch-alist) 'avy-action-helpful)
+  :custom
+  (avy-timeout-seconds 0.3))
 
 ;; save command history
 ;; show the most common one first
