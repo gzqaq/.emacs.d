@@ -768,6 +768,8 @@
 	TeX-source-correlate-start-server t)
   (setq TeX-source-correlate-mode t)
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+  :bind
+  (:map LaTeX-mode-map ("<M-return>" . LaTeX-insert-item))
   :hook
   ;; temporarily use latex-mode-hook to enable AUCTeX
   (latex-mode . LaTeX-mode)
