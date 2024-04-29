@@ -163,6 +163,15 @@
    (text-mode . elec-pair-local-text-mode)))
 
 
+;; backup in the same location
+(setq backup-directory-alist '(("." . "/private/tmp/emacs-backup"))
+      backup-by-copying t
+      version-control t
+      delete-old-versions t
+      kept-new-versions 7
+      kept-old-versions 3)
+
+
 
 ;;;========================
 ;;; appearance
@@ -970,13 +979,11 @@
 (setq browse-url-browser-function 'xwidget-webkit-browse-url)
 
 
-;; backup in the same location
-(setq backup-directory-alist '(("." . "/private/tmp/emacs-backup"))
-      backup-by-copying t
-      version-control t
-      delete-old-versions t
-      kept-new-versions 7
-      kept-old-versions 3)
+;; RSS feed reader
+(use-package elfeed
+  :ensure t
+  :custom
+  (elfeed-feeds '("https://pypi.org/rss/project/jax-metal/releases.xml")))
 
 
 
