@@ -89,7 +89,7 @@
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8-unix)
   ;; fonts
-  (set-face-attribute 'default nil :family "Intel One Mono" :height 120 :weight 'regular)
+  (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
   (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
   (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
   (set-fontset-font "fontset-default" 'han (font-spec :family "PingFang SC"))
@@ -123,11 +123,13 @@
   (global-hl-line-mode 1)
   ;; lockfiles kill `npm start'
   (setq create-lockfiles nil)
-  :bind
-  ("C-x e" . eshell)  ;; originally bind to `'kmacro-end-and-call-macro'
   :config
   ;; no ringing
   (setq ring-bell-function #'ignore)
+  :custom
+  (line-spacing 0.2)
+  :bind
+  ("C-x e" . eshell)  ;; originally bind to `'kmacro-end-and-call-macro'
   :hook
   ;; show the fill column when programming
   (prog-mode . display-fill-column-indicator-mode))
