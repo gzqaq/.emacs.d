@@ -124,7 +124,7 @@
   ;; lockfiles kill `npm start'
   (setq create-lockfiles nil)
   :bind
-  ("C-c e" . eshell)
+  ("C-x e" . eshell)  ;; originally bind to `'kmacro-end-and-call-macro'
   :config
   ;; no ringing
   (setq ring-bell-function #'ignore)
@@ -851,7 +851,7 @@
 				"~/Dropbox/org-my-life/my-life.org")))
   :bind
   (("C-c l C-l" . org-store-link)
-   ("C-c a" . org-agenda))
+   ("C-x a a" . org-agenda))
   :hook
   (org-mode . zq/prettify-org))
 
