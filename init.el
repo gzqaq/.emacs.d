@@ -624,7 +624,7 @@
   (eldoc-echo-area-use-multiline-p t)
   (eglot-autoshutdown t)
   :hook
-  ((python-base-mode rust-mode) . eglot-ensure)
+  ((python-base-mode rust-mode c-mode c++-mode) . eglot-ensure)
   :config
   ;; don't log every event--boost perf
   (fset #'jsonrpc--log-event #'ignore)
@@ -642,6 +642,13 @@
    ("C-c l l" . eglot)
    ("C-c l r n" . eglot-rename)
    ("C-c l s" . eglot-shutdown)))
+
+
+;; C/C++
+(use-package clang-format
+  :ensure t
+  :custom
+  (clang-format-style "Google"))
 
 ;; python
 (use-package python
