@@ -560,6 +560,7 @@
   :custom
   ;; check on save instead of running constantly
   (flycheck-check-syntax-automatically '(mode-enabled save))
+  (flycheck-clang-language-standard "c++17")  ;; use C++17 std
   :hook
   ((prog-mode text-mode) . flycheck-mode))
 
