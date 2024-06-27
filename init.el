@@ -645,11 +645,14 @@
    ("C-c l s" . eglot-shutdown)))
 
 
+
 ;; C/C++
 (use-package clang-format
   :ensure t
   :custom
   (clang-format-style "Google"))
+
+
 
 ;; python
 (use-package python
@@ -811,6 +814,20 @@
   (pdf-tools-install :no-query)  ;; build necessary tool if missing
   :custom
   (pdf-view-display-size 'fit-page))
+
+
+
+;; SICP
+(use-package sicp
+  :ensure t)
+
+;; Racket
+(use-package racket-mode
+  :ensure t)
+
+;; racket in org
+(use-package ob-racket
+  :ensure (:type git :host github :repo "hasu/emacs-ob-racket"))
 
 
 
