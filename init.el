@@ -985,7 +985,7 @@
 ;;; everyday use
 ;;;========================
 
-(use-package commandline
+(use-package utils
   :ensure nil
   :load-path "lisp")
 
