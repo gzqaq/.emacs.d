@@ -10,10 +10,9 @@
 (require 'tramp)
 
 (defun pyrightconfig-write (virtualenv)
-  "Write a `pyrightconfig.json' file at the Git root of a project
-with `venvPath' and `venv' set to the absolute path of
-`virtualenv'.  When run interactively, prompts for a directory to
-select."
+  "Write a `pyrightconfig.json' file at the root of a git repo.
+The `venvPath' and `venv' are set to the absolute path of VIRTUALENV.
+When run interactively, prompts for a directory to select."
   (interactive "DEnv: ")
   ;; Naming convention for venvPath matches the field for pyrightconfig.json
   (let* ((venv-dir (tramp-file-local-name (file-truename virtualenv)))
