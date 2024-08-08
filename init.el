@@ -1013,6 +1013,28 @@
   (elfeed-feeds '("https://pypi.org/rss/project/jax-metal/releases.xml")))
 
 
+;; use MPV to stream URL
+(defun mpv-url (url)
+  "Use `mpv' to stream URL."
+  (interactive "sURL: ")
+  (let ((mpv-buf (get-buffer-create "*mpv*"))
+        (ytdl-url (format "ytdl%s" (substring url 5 nil))))
+    (start-process "mpv" mpv-buf "mpv" "--quiet" ytdl-url)
+    (with-current-buffer mpv-buf
+      (insert "\n=============\n\n"))))
+
+
+;; use MPV to play local media
+(defun mpv-media (file)
+  "Use `mpv' to play FILE."
+  (interactive "fMedia: ")
+  (let ((mpv-buf (get-buffer-create "*mpv*"))
+        (fpath (expand-file-name file)))
+    (start-process "mpv" mpv-buf "mpv" "--quiet" fpath)
+    (with-current-buffer mpv-buf
+      (insert "\n=============\n\n"))))
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
