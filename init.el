@@ -801,7 +801,8 @@
   :ensure nil
   :custom
   (reftex-plug-into-AUCTeX t)
-  (reftex-default-bibliography (list (expand-file-name "~/Dropbox/refs.bib")))
+  (reftex-default-bibliography
+   (list (expand-file-name "~/OneDrive/zot-references.bib")))
   :hook
   (LaTeX-mode . turn-on-reftex))
 
@@ -875,7 +876,7 @@
   ;; open pdf with emacs
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
   (setq org-agenda-files (list (expand-file-name
-				"~/Dropbox/org-my-life/my-life.org")))
+				"~/OneDrive/org-life/my-life.org")))
   :bind
   (("C-c l C-l" . org-store-link)
    ("C-x a a" . org-agenda))
@@ -909,7 +910,7 @@
   :delight "-Ω-"
   :defines (org-roam-capture-templates org-roam-mode-map)
   :custom
-  (org-roam-directory (file-truename (expand-file-name "~/Dropbox/org-roam")))
+  (org-roam-directory (file-truename (expand-file-name "~/OneDrive/org-roam")))
   (org-roam-db-location (expand-file-name "~/.org/org-roam.db"))
   (org-roam-graph-viewer (if (eq system-type 'darwin) 'open-svg-on-mac "/usr/bin/google-chrome-stable"))
   :config
@@ -968,13 +969,15 @@
   :ensure t
   :defer t
   :custom
-  (org-cite-global-bibliography (list (expand-file-name "~/Dropbox/refs.bib")))
+  (org-cite-global-bibliography
+   (list (expand-file-name "~/OneDrive/zot-references.bib")))
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
   (citar-bibliography org-cite-global-bibliography)
   (citar-citeproc-csl-styles-dir (expand-file-name "~/Zotero/styles"))
-  (citar-library-paths (list (expand-file-name "~/Dropbox/zotero-attachments/")))
+  (citar-library-paths
+   (list (expand-file-name "~/OneDrive/zotero-attachments/")))
   :hook
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup))
@@ -999,7 +1002,7 @@
 (defun open-my-agenda ()
   "Open agenda file."
   (interactive)
-  (find-file (expand-file-name "~/Dropbox/org-my-life/my-life.org")))
+  (find-file (expand-file-name "~/OneDrive/org-life/my-life.org")))
 
 
 ;; use xwidget-webkit to open link
