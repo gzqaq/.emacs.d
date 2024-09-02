@@ -891,9 +891,9 @@
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
   (setq org-agenda-files (list (expand-file-name
 				"~/OneDrive/org-life/my-life.org")))
-  :bind
-  (("C-c l C-l" . org-store-link)
-   ("C-x a a" . org-agenda))
+  :bind (("C-c a" . org-agenda)
+         :map org-mode-map
+         ("C-c M-L" . org-store-link))
   :hook
   (org-mode . zq/prettify-org))
 
@@ -942,11 +942,13 @@
 	   "#+title: ${title}\n#+author: Ziqin Gong\n#+filetags:\n#+created: %U\n#+last_modified: %U\n\n")
 	   :unnarrowed t)))
   (org-roam-db-autosync-enable)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-	 ("C-c n f" . org-roam-node-find)
-	 ("C-c n g" . org-roam-graph)
+  :bind (("C-c n f" . org-roam-node-find)
 	 ("C-c n i" . org-roam-node-insert)
-	 ("C-c n c" . org-roam-capture))
+	 ("C-c n c" . org-roam-capture)
+         :map org-mode-map
+         ("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n r" . org-roam-ref-add)
+         ("C-c n a" . org-roam-alias-add))
   :hook
   ;; enable last_modified
   (org-mode . update-last-modified-field))
@@ -964,7 +966,8 @@
   (setq org-roam-ui-sync-theme t
 	org-roam-ui-follow t
 	org-roam-ui-update-on-save t
-	org-roam-ui-open-on-start t))
+	org-roam-ui-open-on-start t)
+  :bind (("C-c n g" . org-roam-ui-open)))
 
 ;; org to epub
 (use-package ox-epub
