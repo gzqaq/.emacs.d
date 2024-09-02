@@ -1042,6 +1042,20 @@
       (insert "\n=============\n\n"))))
 
 
+;; play white noise with MPV
+(defun white-noise (file)
+  "Play white noise from FILE."
+  (interactive "fWhite noise: ")
+  (let ((mpv-proc (start-process "mpv" nil
+                                 "mpv" "--quiet" (expand-file-name file))))
+    (when mpv-proc
+      (set-process-sentinel
+       mpv-proc
+       (lambda (proc status)
+         (if (string= status "finished\n")
+             (message "White noise ended. Take a break!")))))))
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
