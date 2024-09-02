@@ -12,9 +12,9 @@
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-			      :ref nil :depth 1
-			      :files (:defaults "elpaca-test.el" (:exclude "extensions"))
-			      :build (:not elpaca--activate-package)))
+                              :ref nil :depth 1
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
        (build (expand-file-name "elpaca/" elpaca-builds-directory))
        (order (cdr elpaca-order))
@@ -24,20 +24,20 @@
     (make-directory repo t)
     (when (< emacs-major-version 28) (require 'subr-x))
     (condition-case-unless-debug err
-	(if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-		 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
-						 ,@(when-let ((depth (plist-get order :depth)))
-						     (list (format "--depth=%d" depth) "--no-single-branch"))
-						 ,(plist-get order :repo) ,repo))))
-		 ((zerop (call-process "git" nil buffer t "checkout"
-				       (or (plist-get order :ref) "--"))))
-		 (emacs (concat invocation-directory invocation-name))
-		 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-				       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-		 ((require 'elpaca))
-		 ((elpaca-generate-autoloads "elpaca" repo)))
-	    (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-	  (error "%s" (with-current-buffer buffer (buffer-string))))
+        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                 ,@(when-let ((depth (plist-get order :depth)))
+                                                     (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                 ,(plist-get order :repo) ,repo))))
+                 ((zerop (call-process "git" nil buffer t "checkout"
+                                       (or (plist-get order :ref) "--"))))
+                 (emacs (concat invocation-directory invocation-name))
+                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                 ((require 'elpaca))
+                 ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
   (unless (require 'elpaca-autoloads nil t)
     (require 'elpaca)
@@ -139,7 +139,7 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 5)
-				      ((control))))
+                                      ((control))))
   (dolist (multiple '("" "double-" "triple-"))
     (dolist (direction '("right" "left"))
       (global-set-key (read-kbd-macro (concat "<" multiple "wheel-" direction ">")) 'ignore)))
@@ -158,7 +158,7 @@
   (defun elec-pair-local-text-mode ()
     "Advise and wrap electric pairs in text mode."
     (add-function :before-until electric-pair-inhibit-predicate
-		  (lambda (c) (eq c ?<)))
+                  (lambda (c) (eq c ?<)))
     (electric-pair-local-mode))
   :hook
   ((prog-mode . electric-pair-local-mode)
@@ -211,12 +211,12 @@
   "Disable line numbers.  To be added in hooks."
   (display-line-numbers-mode 0))
 (dolist (mode '(org-mode-hook
-		xwidget-webkit-mode-hook
-		pdf-view-mode-hook
-		term-mode-hook
-		shell-mode-hook
-		treemacs-mode-hook
-		eshell-mode-hook))
+                xwidget-webkit-mode-hook
+                pdf-view-mode-hook
+                term-mode-hook
+                shell-mode-hook
+                treemacs-mode-hook
+                eshell-mode-hook))
   (add-hook mode #'disable-line-numbers))
 
 ;; show function arglist or variable docstring in echo area
@@ -248,23 +248,23 @@
   :ensure t
   :init
   (setq modus-themes-org-blocks 'tinted-background
-	modus-themes-italic-constructs t
-	modus-themes-bold-constructs t
-	modus-themes-mixed-fonts t
-	modus-themes-variable-pitch-ui nil
-	modus-themes-common-palette-overrides
-	'((bg-mode-line-active bg-main)
-	  (bg-mode-line-inactive bg-dim)
-	  (border-mode-line-inactive bg-inactive)
-	  (fringe subtle)
-	  (bg-paren-match bg-yellow-intense)
-	  (custom-set-faces
-	   '(mode-line ((t :family "SF Mono" :height 100 :weight 'regular))))))
+        modus-themes-italic-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui nil
+        modus-themes-common-palette-overrides
+        '((bg-mode-line-active bg-main)
+          (bg-mode-line-inactive bg-dim)
+          (border-mode-line-inactive bg-inactive)
+          (fringe subtle)
+          (bg-paren-match bg-yellow-intense)
+          (custom-set-faces
+           '(mode-line ((t :family "SF Mono" :height 100 :weight 'regular))))))
   (setq modus-themes-headings
-	(quote ((1 . (overline variable-pitch 1.4))
-		(2 . (overline variable-pitch 1.25))
-		(3 . (overline 1.1))
-		(t . (monochrome)))))
+        (quote ((1 . (overline variable-pitch 1.4))
+                (2 . (overline variable-pitch 1.25))
+                (3 . (overline 1.1))
+                (t . (monochrome)))))
   :config
   (add-hook 'ns-system-appearance-change-functions #'zq/apply-theme)
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
@@ -321,7 +321,7 @@
   (when (local-variable-p 'completion-at-point-functions)
     ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-		corfu-popupinfo-delay nil)
+                corfu-popupinfo-delay nil)
     (corfu-mode 1)))
 
 
@@ -364,57 +364,57 @@
   :ensure t
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
-	 ("C-c M-x" . consult-mode-command)
-	 ("C-c h" . consult-history)
-	 ("C-c k" . consult-kmacro)
-	 ("C-c m" . consult-man)
-	 ("C-c i" . consult-info)
-	 ([remap Info-search] . consult-info)
-	 ;; C-x bindings in `ctl-x-map'
-	 ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-	 ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-	 ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-	 ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-	 ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
-	 ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-	 ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
-	 ;; Custom M-# bindings for fast register access
-	 ("M-#" . consult-register-load)
-	 ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
-	 ("C-M-#" . consult-register)
-	 ;; Other custom bindings
-	 ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-	 ;; M-g bindings in `goto-map'
-	 ("M-g e" . consult-compile-error)
-	 ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
-	 ("M-g g" . consult-goto-line)             ;; orig. goto-line
-	 ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-	 ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
-	 ("M-g m" . consult-mark)
-	 ("M-g k" . consult-global-mark)
-	 ("M-g i" . consult-imenu)
-	 ("M-g I" . consult-imenu-multi)
-	 ;; M-s bindings in `search-map'
-	 ("M-s d" . consult-find)                  ;; Alternative: consult-fd
-	 ("M-s c" . consult-locate)
-	 ("M-s g" . consult-grep)
-	 ("M-s G" . consult-git-grep)
-	 ("M-s r" . consult-ripgrep)
-	 ("C-s" . consult-line)                    ;; combined with orderless to replace isearch
-	 ("M-s L" . consult-line-multi)
-	 ("M-s k" . consult-keep-lines)
-	 ("M-s u" . consult-focus-lines)
-	 ;; Isearch integration
-	 ("M-s e" . consult-isearch-history)
-	 :map isearch-mode-map
-	 ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-	 ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-	 ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-	 ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
-	 ;; Minibuffer history
-	 :map minibuffer-local-map
-	 ("M-s" . consult-history)                 ;; orig. next-matching-history-element
-	 ("M-r" . consult-history))                ;; orig. previous-matching-history-element
+         ("C-c M-x" . consult-mode-command)
+         ("C-c h" . consult-history)
+         ("C-c k" . consult-kmacro)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
+         ([remap Info-search] . consult-info)
+         ;; C-x bindings in `ctl-x-map'
+         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
+         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
+         ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ;; M-g bindings in `goto-map'
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ;; M-s bindings in `search-map'
+         ("M-s d" . consult-find)                  ;; Alternative: consult-fd
+         ("M-s c" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("C-s" . consult-line)                    ;; combined with orderless to replace isearch
+         ("M-s L" . consult-line-multi)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; Isearch integration
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+         ;; Minibuffer history
+         :map minibuffer-local-map
+         ("M-s" . consult-history)                 ;; orig. next-matching-history-element
+         ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
@@ -427,7 +427,7 @@
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
-	register-preview-function #'consult-register-format)
+        register-preview-function #'consult-register-format)
 
   ;; Optionally tweak the register preview window.
   ;; This adds thin lines, sorting and hides the mode line of the window.
@@ -435,7 +435,7 @@
 
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
-	xref-show-definitions-function #'consult-xref)
+        xref-show-definitions-function #'consult-xref)
 
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
@@ -538,7 +538,7 @@
   :delight
   :config
   (add-hook 'elpaca-after-init-hook
-	    (lambda () (global-whitespace-cleanup-mode t))))
+            (lambda () (global-whitespace-cleanup-mode t))))
 
 
 
@@ -593,22 +593,22 @@
   (treesit-install-language-grammar nf/treesit-install-all-languages)
   :init
   (setq treesit-language-source-alist
-	'((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
-	  (c . ("https://github.com/tree-sitter/tree-sitter-c"))
-	  (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
-	  (cmake . ("https://github.com/uyha/tree-sitter-cmake"))
-	  (go . ("https://github.com/tree-sitter/tree-sitter-go"))
-	  (json . ("https://github.com/tree-sitter/tree-sitter-json"))
-	  (make . ("https://github.com/alemuller/tree-sitter-make"))
-	  (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" "master" "ocaml/src"))
-	  (python . ("https://github.com/tree-sitter/tree-sitter-python"))
-	  (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
-	  (rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
-	  (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
+        '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
+          (c . ("https://github.com/tree-sitter/tree-sitter-c"))
+          (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+          (cmake . ("https://github.com/uyha/tree-sitter-cmake"))
+          (go . ("https://github.com/tree-sitter/tree-sitter-go"))
+          (json . ("https://github.com/tree-sitter/tree-sitter-json"))
+          (make . ("https://github.com/alemuller/tree-sitter-make"))
+          (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" "master" "ocaml/src"))
+          (python . ("https://github.com/tree-sitter/tree-sitter-python"))
+          (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
+          (rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
+          (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
           (typst . ("https://github.com/uben0/tree-sitter-typst"))))
   (dolist (mapping '((python-mode . python-ts-mode)
-		     (sh-mode . bash-ts-mode)
-		     (rust-mode . rust-ts-mode)))
+                     (sh-mode . bash-ts-mode)
+                     (rust-mode . rust-ts-mode)))
     (add-to-list 'major-mode-remap-alist mapping))
   :config
   (defun nf/treesit-install-all-languages ()
@@ -616,13 +616,13 @@
     (interactive)
     (let ((languages (mapcar 'car treesit-language-source-alist)))
       (dolist (lang languages)
-	(treesit-install-language-grammar lang)
-	(message "`%s' parser was installed." lang)
-	(sit-for 0.75)))))
+        (treesit-install-language-grammar lang)
+        (message "`%s' parser was installed." lang)
+        (sit-for 0.75)))))
 
 (use-package combobulate
   :ensure (:host github :repo "mickeynp/combobulate"
-		 :depth 1 :main "combobulate.el")
+                 :depth 1 :main "combobulate.el")
   :after treesit
   :defer t
   :init
@@ -644,10 +644,10 @@
   (fset #'jsonrpc--log-event #'ignore)
   ;; rust
   (add-to-list 'eglot-server-programs
-	       `(rust-mode . ("rust-analyzer" :initializationOptions
-			      ( :procMacro (:enbale t)
-				:cargo ( :buildScripts (:enable t)
-					 :features "all")))))
+               `(rust-mode . ("rust-analyzer" :initializationOptions
+                              ( :procMacro (:enbale t)
+                                :cargo ( :buildScripts (:enable t)
+                                         :features "all")))))
   :bind
   (("C-c l c" . eglot-reconnect)
    ("C-c l d" . flymake-show-buffer-diagnostics)
@@ -765,7 +765,7 @@
 
 (use-package typst-preview
   :ensure (:host github :repo "havarddj/typst-preview.el"
-		 :depth 1 :main "typst-preview.el")
+                 :depth 1 :main "typst-preview.el")
   :custom
   (typst-preview-browser "xwidget"))
 
@@ -776,31 +776,31 @@
 (defun zq/org-latex-preview-scale-fn ()
   "Org LaTeX preview scale function."
   (* (/ 10.0
-	(preview-document-pt))
+        (preview-document-pt))
      preview-scale))
 
 (use-package auctex
   :ensure (auctex :pre-build (("./autogen.sh")
-			      ("./configure"
-			       "--without-texmf-dir"
-			       "--with-packagelispdir=./"
-			       "--with-packagedatadir=./")
-			      ("make"))
-		  :build (:not elpaca--compile-info) ;; Make will take care of this step
-		  :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
-		  :version (lambda (_) (require 'tex-site) AUCTeX-version))
+                              ("./configure"
+                               "--without-texmf-dir"
+                               "--with-packagelispdir=./"
+                               "--with-packagedatadir=./")
+                              ("make"))
+                  :build (:not elpaca--compile-info) ;; Make will take care of this step
+                  :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
+                  :version (lambda (_) (require 'tex-site) AUCTeX-version))
   ;; don't know why :mode fails
   ;; :mode ("\\.tex\\'" . LaTeX-mode)
   :init
   (setq-default preview-scale 1.2
-		preview-scale-function #'zq/org-latex-preview-scale-fn)
+                preview-scale-function #'zq/org-latex-preview-scale-fn)
   ;; :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
   (setq preview-auto-cache-preamble nil)
   (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-	TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-	TeX-source-correlate-start-server t)
+        TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+        TeX-source-correlate-start-server t)
   (setq TeX-source-correlate-mode t)
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
   :bind
@@ -892,7 +892,7 @@
   ;; open pdf with emacs
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
   (setq org-agenda-files (list (expand-file-name
-				"~/OneDrive/org-life/my-life.org")))
+                                "~/OneDrive/org-life/my-life.org")))
   :bind (("C-c a" . org-agenda)
          :map org-mode-map
          ("C-c M-L" . org-store-link))
@@ -915,9 +915,9 @@
 (defun update-last-modified-field ()
   "Update `last_modified' at save."
   (setq-local time-stamp-active t
-	      time-stamp-start "#\\+last_modified:[ \t]*"
-	      time-stamp-end "$"
-	      time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+              time-stamp-start "#\\+last_modified:[ \t]*"
+              time-stamp-end "$"
+              time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
   (add-hook 'before-save-hook 'time-stamp nil 'local))
 
 (use-package org-roam
@@ -931,22 +931,22 @@
   (org-roam-graph-viewer (if (eq system-type 'darwin) 'open-svg-on-mac "/usr/bin/google-chrome-stable"))
   :config
   (setq org-roam-capture-templates
-	'(("d" "default" plain "%?"
-	   :if-new (file+head "fleeting/%<%Y%m%d%H%M%S>-${slug}.org"
-			      "#+title: ${title}\n#+created: %U \n#+last_modified: %U\n\n")
-	   :unnarrowed t)
-	  ("c" "concept" plain "%?"
-	   :if-new (file+head "concepts/${slug}.org"
-	   "#+title: ${title}\n#+author: Ziqin Gong\n#+filetags:\n#+created: %U\n#+last_modified: %U\n\n")
-	   :unnarrowed t)
-	  ("l" "literature" plain "%?"
-	   :if-new (file+head "literature/${slug}.org"
-	   "#+title: ${title}\n#+author: Ziqin Gong\n#+filetags:\n#+created: %U\n#+last_modified: %U\n\n")
-	   :unnarrowed t)))
+        '(("d" "default" plain "%?"
+           :if-new (file+head "fleeting/%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+created: %U \n#+last_modified: %U\n\n")
+           :unnarrowed t)
+          ("c" "concept" plain "%?"
+           :if-new (file+head "concepts/${slug}.org"
+           "#+title: ${title}\n#+author: Ziqin Gong\n#+filetags:\n#+created: %U\n#+last_modified: %U\n\n")
+           :unnarrowed t)
+          ("l" "literature" plain "%?"
+           :if-new (file+head "literature/${slug}.org"
+           "#+title: ${title}\n#+author: Ziqin Gong\n#+filetags:\n#+created: %U\n#+last_modified: %U\n\n")
+           :unnarrowed t)))
   (org-roam-db-autosync-enable)
   :bind (("C-c n f" . org-roam-node-find)
-	 ("C-c n i" . org-roam-node-insert)
-	 ("C-c n c" . org-roam-capture)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
          :map org-mode-map
          ("C-c n l" . org-roam-buffer-toggle)
          ("C-c n r" . org-roam-ref-add)
@@ -966,9 +966,9 @@
   ;; :hook (after-init . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
-	org-roam-ui-follow t
-	org-roam-ui-update-on-save t
-	org-roam-ui-open-on-start t)
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t)
   :bind (("C-c n g" . org-roam-ui-open)))
 
 ;; org to epub
