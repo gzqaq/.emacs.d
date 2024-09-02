@@ -852,6 +852,9 @@
   (org-fontify-whole-heading-line nil)
   (org-fontify-whole-block-delimiter-line t)
   (org-special-ctrl-a/e t)
+  ;; hide scheduled repeated entries past deadline
+  (org-agenda-skip-scheduled-repeats-after-deadline t)
+  ;; hide */~+ markers
   (org-hide-emphasis-markers t)
   ;; don't prompt before running code in org
   (org-confirm-babel-evaluate nil)
@@ -1024,6 +1027,7 @@
         (ytdl-url (format "ytdl%s" (substring url 5 nil))))
     (start-process "mpv" mpv-buf "mpv" "--quiet" ytdl-url)
     (with-current-buffer mpv-buf
+      (insert (format "URL: %s\n" url))
       (insert "\n=============\n\n"))))
 
 
