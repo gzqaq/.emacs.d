@@ -128,8 +128,6 @@
   (setq ring-bell-function #'ignore)
   :custom
   (line-spacing 0.2)
-  :bind
-  ("C-x e" . eshell)  ;; originally bind to `'kmacro-end-and-call-macro'
   :hook
   ;; show the fill column when programming
   (prog-mode . display-fill-column-indicator-mode))
@@ -172,6 +170,13 @@
       delete-old-versions t
       kept-new-versions 7
       kept-old-versions 3)
+
+
+;; global key binding for Eshell
+(use-package eshell
+  :ensure nil
+  :bind
+  ("C-c e" . eshell))
 
 
 
