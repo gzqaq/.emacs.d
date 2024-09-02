@@ -66,11 +66,11 @@
 
 ;; set paths correctly
 ;; unnecessary since Emacs+ inject `PATH' by default
-;; (use-package exec-path-from-shell
-;;   :ensure t
-;;   :demand t ; help emacs find libgccjit.so installed by homebrew
-;;   :config
-;;   (add-hook 'after-init-hook #'exec-path-from-shell-initialize))
+(use-package exec-path-from-shell
+  :ensure t
+  :demand t ; help emacs find libgccjit.so installed by homebrew
+  :config
+  (add-hook 'after-init-hook #'exec-path-from-shell-initialize))
 
 ;; block until current queue processed.
 ;; necessary to use these keywords at the top-level.
@@ -126,6 +126,8 @@
   :config
   ;; no ringing
   (setq ring-bell-function #'ignore)
+  ;; use xwidget-webkit to open link
+  (setq browse-url-browser-function 'xwidget-webkit-browse-url)
   :custom
   (line-spacing 0.2)
   :hook
@@ -1006,9 +1008,11 @@
 ;;; everyday use
 ;;;========================
 
-(use-package utils
-  :ensure nil
-  :load-path "lisp")
+;; RSS feed reader
+(use-package elfeed
+  :ensure t
+  :custom
+  (elfeed-feeds '("https://pypi.org/rss/project/jax-metal/releases.xml")))
 
 
 (defun open-my-config ()
@@ -1021,17 +1025,6 @@
   "Open agenda file."
   (interactive)
   (find-file (expand-file-name "~/OneDrive/org-life/my-life.org")))
-
-
-;; use xwidget-webkit to open link
-(setq browse-url-browser-function 'xwidget-webkit-browse-url)
-
-
-;; RSS feed reader
-(use-package elfeed
-  :ensure t
-  :custom
-  (elfeed-feeds '("https://pypi.org/rss/project/jax-metal/releases.xml")))
 
 
 ;; use MPV to stream URL
@@ -1069,6 +1062,18 @@
        (lambda (proc status)
          (if (string= status "finished\n")
              (message "White noise ended. Take a break!")))))))
+
+
+(use-package utils
+  :ensure nil
+  :load-path "lisp"
+  :bind
+  (("C-c z d" . delete-file-and-buffer)
+   ("C-c z c" . open-my-config)
+   ("C-c z a" . open-my-agenda)
+   ("C-c z m u" . mpv-url)
+   ("C-c z m m" . mpv-media)
+   ("C-c z w" . white-noise)))
 
 
 
