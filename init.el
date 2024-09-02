@@ -120,7 +120,7 @@
   ;; increase the amount of data which emacs read from processes
   (setq read-process-output-max (* 1024 1024))
   ;; highlight the current line
-  (global-hl-line-mode 1)
+  ;; (global-hl-line-mode 1)  ; use beacon-mode
   ;; lockfiles kill `npm start'
   (setq create-lockfiles nil)
   :config
@@ -185,6 +185,12 @@
 
 ;; never use tabs for indentation
 (setq-default indent-tabs-mode nil)
+
+;; highlights the cursor when it takes a large leap
+(use-package beacon
+  :ensure t
+  :config
+  (beacon-mode))
 
 ;; colorful delimiters
 (use-package rainbow-delimiters
