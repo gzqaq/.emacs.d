@@ -920,6 +920,11 @@
               time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
   (add-hook 'before-save-hook 'time-stamp nil 'local))
 
+(defun org-roam-ref-add-from-key (key)
+  "Add reference whose citation key is KEY to the node at point."
+  (interactive "sCitation key: ")
+  (org-roam-ref-add (format "[cite:@%s]" key)))
+
 (use-package org-roam
   :ensure t
   :defer t
@@ -949,7 +954,7 @@
          ("C-c n c" . org-roam-capture)
          :map org-mode-map
          ("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n r" . org-roam-ref-add)
+         ("C-c n r" . org-roam-ref-add-from-key)
          ("C-c n a" . org-roam-alias-add))
   :hook
   ;; enable last_modified
