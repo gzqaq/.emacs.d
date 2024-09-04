@@ -978,7 +978,7 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t)
-  :bind (("C-c n g" . org-roam-ui-open)))
+  :bind (("C-c n g" . org-roam-ui-mode)))
 
 ;; org to epub
 (use-package ox-epub
