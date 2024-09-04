@@ -947,6 +947,10 @@
           ("l" "literature" plain "%?"
            :if-new (file+head "literature/${slug}.org"
            "#+title: ${title}\n#+author: Ziqin Gong\n#+filetags:\n#+created: %U\n#+last_modified: %U\n\n")
+           :unnarrowed t)
+          ("C" "collection" plain "%?"
+           :if-new (file+head "collections/${slug}.org"
+           "#+title: ${title}\n#+author: Ziqin Gong\n#+filetags:\n#+created: %U\n#+last_modified: %U\n\n")
            :unnarrowed t)))
   (org-roam-db-autosync-enable)
   :bind (("C-c n f" . org-roam-node-find)
