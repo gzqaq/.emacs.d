@@ -1007,6 +1007,8 @@
   (citar-citeproc-csl-styles-dir (expand-file-name "~/Zotero/styles"))
   (citar-library-paths
    (list (expand-file-name "~/OneDrive/zotero-attachments/")))
+  (citar-notes-paths
+   (list (expand-file-name "~/OneDrive/org-roam/literature/")))
   :hook
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup))
