@@ -694,8 +694,8 @@
   :ensure t
   :defer t
   :init
-  (setq conda-anaconda-home (expand-file-name "~/miniforge3/"))
-  (setq conda-env-home-directory (expand-file-name "~/miniforge3/"))
+  (setq conda-anaconda-home "/opt/homebrew/Caskroom/miniforge/")
+  (setq conda-env-home-directory "/opt/homebrew/Caskroom/miniforge/")
   :config
   (conda-env-initialize-interactive-shells)
   (conda-env-initialize-eshell))
