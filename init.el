@@ -865,6 +865,8 @@
   (org-fontify-whole-heading-line nil)
   (org-fontify-whole-block-delimiter-line t)
   (org-special-ctrl-a/e t)
+  ;; Block changing TODO to DONE when dependency not satisfied
+  (org-enforce-todo-dependencies t)
   ;; hide scheduled repeated entries past deadline
   (org-agenda-skip-scheduled-repeats-after-deadline t)
   ;; hide */~+ markers
