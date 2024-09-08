@@ -894,7 +894,7 @@
   ;; open pdf with emacs
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
   (setq org-agenda-files (list (expand-file-name
-                                "~/OneDrive/org-life/my-life.org")))
+                                "~/OneDrive/org-life/agenda.org")))
   :bind (("C-c a" . org-agenda)
          :map org-mode-map
          ("C-c M-L" . org-store-link))
@@ -1037,7 +1037,7 @@
 (defun open-my-agenda ()
   "Open agenda file."
   (interactive)
-  (find-file (expand-file-name "~/OneDrive/org-life/my-life.org")))
+  (find-file (expand-file-name "~/OneDrive/org-life/agenda.org")))
 
 
 ;; use MPV to stream URL
