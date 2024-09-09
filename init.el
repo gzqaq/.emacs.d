@@ -885,7 +885,7 @@
   (org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
   ;; latex packages
   (org-latex-packages-alist
-   (list (list "" (expand-file-name "~/Dropbox/assets/latex-sty/math") t)))
+   (list (list "" (expand-file-name "~/OneDrive/assets/templates/dl-math") t)))
   ;; use zotero styles for csl exports
   (org-cite-csl-styles-dir (expand-file-name "~/Zotero/styles/"))
   ;; use id to insert link
