@@ -898,8 +898,8 @@
   :bind (("C-c a" . org-agenda)
          :map org-mode-map
          ("C-c M-L" . org-store-link)
-         ("C-c t C-m" . TeX-insert-macro)
-         ("C-c t C-e" . LaTeX-environment))
+         ("C-c t m" . TeX-insert-macro)
+         ("C-c t e" . LaTeX-environment))
   :hook
   (org-mode . zq/prettify-org))
 
