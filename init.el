@@ -988,12 +988,11 @@
   :after org)
 
 ;; use auctex preview
-;; need to first open a .tex file to load this package
-;; how to automatically load AUCTeX when calling `org-auctex-mode'?
 (use-package org-auctex
   :ensure nil
   :load-path "lisp"
-  :after tex)
+  :hook
+  (org-mode . org-auctex-mode))
 
 ;; citation
 (use-package citar
