@@ -855,6 +855,34 @@
   (setq-local fill-column 100)
   (setq-local line-spacing 0.3))
 
+(defun insert-delimiter (type)
+  "Insert delimiters based on TYPE with \\left \\right for LaTeX equations.
+\() -- 0, [] -- 1, {} -- 2."
+  (defun insert-delimiter-and-stay-in-between (delimiters)
+    (insert (car delimiters))
+    (save-excursion
+      (insert (car (cdr delimiters)))))
+  (insert-delimiter-and-stay-in-between
+   (cond ((= type 0) (list "\\left(" "\\right)"))
+         ((= type 1) (list "\\left[" "\\right]"))
+         ((= type 2) (list "\\left\\{" "\\right\\}"))
+         (t (error "Unsupported delimiter type!")))))
+
+(defun insert-left-right-parentheses ()
+  "Insert \\left( and \\right)."
+  (interactive)
+  (insert-delimiter 0))
+
+(defun insert-left-right-brackets ()
+  "Insert \\left[ and \\right]."
+  (interactive)
+  (insert-delimiter 1))
+
+(defun insert-left-right-braces ()
+  "Insert \\left\\{ and \\right\\}."
+  (interactive)
+  (insert-delimiter 2))
+
 (use-package org
   :ensure nil
   :defer t
@@ -899,7 +927,10 @@
          :map org-mode-map
          ("C-c M-L" . org-store-link)
          ("C-c t m" . TeX-insert-macro)
-         ("C-c t e" . LaTeX-environment))
+         ("C-c t e" . LaTeX-environment)
+         ("C-c t 0" . insert-left-right-parentheses)
+         ("C-c t [" . insert-left-right-brackets)
+         ("C-c t ]" . insert-left-right-braces))
   :hook
   (org-mode . zq/prettify-org))
 
