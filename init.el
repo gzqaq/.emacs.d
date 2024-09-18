@@ -915,7 +915,10 @@
   (org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
   ;; latex packages
   (org-latex-packages-alist
-   (list (list "" (expand-file-name "~/OneDrive/assets/templates/dl-math") t)))
+   (list (list "" "bm" t)
+         (list "" (expand-file-name "~/OneDrive/assets/templates/dl-math") t)))
+  ;; export to latex with smart quotes
+  (org-export-with-smart-quotes t)
   ;; use zotero styles for csl exports
   (org-cite-csl-styles-dir (expand-file-name "~/Zotero/styles/"))
   ;; use id to insert link
