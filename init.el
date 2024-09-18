@@ -805,6 +805,8 @@
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
   ;; :bind
   ;; (:map LaTeX-mode-map ("<M-return>" . LaTeX-insert-item))
+  :custom
+  (TeX-auto-local ".tex_auto")
   :hook
   ;; temporarily use latex-mode-hook to enable AUCTeX
   (latex-mode . LaTeX-mode)
