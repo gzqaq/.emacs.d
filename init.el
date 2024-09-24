@@ -902,8 +902,10 @@
   (org-special-ctrl-a/e t)
   ;; Block changing TODO to DONE when dependency not satisfied
   (org-enforce-todo-dependencies t)
-  ;; hide scheduled repeated entries past deadline
-  (org-agenda-skip-scheduled-repeats-after-deadline t)
+  ;; skip scheduled if deadline is shown unless scheduled today
+  (org-agenda-skip-scheduled-if-deadline-is-shown 'not-today)
+  ;; no deadline warning before scheduled date
+  (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
   ;; hide */~+ markers
   (org-hide-emphasis-markers t)
   ;; don't prompt before running code in org
