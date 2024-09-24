@@ -480,6 +480,11 @@
   ;; (setq consult-project-function nil)
   )
 
+;; quick select and copy
+(use-package easy-kill
+  :ensure t
+  :bind (([remap kill-ring-save] . easy-kill)))
+
 ;; quick jump and act
 (defun avy-action-helpful (pt)
   "Look up a symbol at PT via avy."
