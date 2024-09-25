@@ -808,8 +808,12 @@
         TeX-source-correlate-start-server t)
   (setq TeX-source-correlate-mode t)
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-  ;; :bind
-  ;; (:map LaTeX-mode-map ("<M-return>" . LaTeX-insert-item))
+  :bind
+  (:map LaTeX-mode-map
+        ("<M-return>" . LaTeX-insert-item)
+        ("C-c t 0" . insert-left-right-parentheses)
+        ("C-c t [" . insert-left-right-brackets)
+        ("C-c t ]" . insert-left-right-braces))
   :custom
   (TeX-auto-local ".tex_auto")
   :hook
