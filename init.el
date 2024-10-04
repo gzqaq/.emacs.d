@@ -174,13 +174,6 @@
       kept-old-versions 3)
 
 
-;; global key binding for Eshell
-(use-package eshell
-  :ensure nil
-  :bind
-  ("C-c e" . eshell))
-
-
 
 ;;;========================
 ;;; appearance
@@ -550,6 +543,44 @@
 ;;;========================
 ;;; development
 ;;;========================
+
+;; eshell
+(defun fancy-shell ()
+  "A pretty eshell with git status.  Reference:
+https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
+  (let* ((cwd (abbreviate-file-name (eshell/pwd)))
+         (ref (magit-get-shortname "HEAD"))
+         (stat (magit-file-status))
+         (x-stat eshell-last-command-status)
+         (git-chunk
+          (if ref
+              (format "%s%s%s "
+                      (propertize (if stat "[" "(")
+                                  'font-lock-face (if stat 'error 'success))
+                      (propertize ref 'font-lock-face 'warning)
+                      (propertize (if stat "]" ")")
+                                  'font-lock-face (if stat 'error 'success)))
+            "")))
+    (propertize
+     (format "%s %s %s$ "
+             (if (< 0 x-stat)
+                 (format (propertize "!%s" 'font-lock-face 'error) x-stat)
+               (propertize "➤"
+                           'font-lock-face (if (< 0 x-stat) 'error 'success)))
+             (propertize cwd 'font-lock-face 'term-bold)
+             git-chunk)
+     'read-only nil ;; unable to insert any character if true
+     'front-sticky   '(font-lock-face read-only)
+     'rear-nonsticky '(font-lock-face read-only))))
+
+(use-package eshell
+  :ensure nil
+  :custom
+  (eshell-prompt-function 'fancy-shell)
+  (eshell-prompt-regexp "^[^#$\n]* [$#] ")
+  (eshell-highlight-prompt nil)
+  :bind
+  ("C-c e" . eshell))
 
 ;; magit
 (use-package magit
