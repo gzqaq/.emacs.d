@@ -821,9 +821,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                   :pre-build (("make" "elpa"))
                   :build (:not elpaca--compile-info) ;; Make will take care of this step
                   :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
-                  :version (lambda (_) (require 'tex-site) AUCTeX-version))
-  ;; don't know why :mode fails
-  ;; :mode ("\\.tex\\'" . LaTeX-mode)
+                  :version (lambda (_) (require 'tex-site) AUCTeX-version)))
+
+(use-package latex
+  :ensure nil
   :init
   (setq-default preview-scale 1.2
                 preview-scale-function #'zq/org-latex-preview-scale-fn)
@@ -845,8 +846,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   (TeX-auto-local ".tex_auto")
   :hook
-  ;; temporarily use latex-mode-hook to enable AUCTeX
-  (latex-mode . LaTeX-mode)
   (LaTeX-mode . turn-on-auto-fill))
 
 (use-package reftex
