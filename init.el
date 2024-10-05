@@ -549,8 +549,10 @@
   "A pretty eshell with git status.  Reference:
 https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (let* ((cwd (abbreviate-file-name (eshell/pwd)))
-         (ref (magit-get-shortname "HEAD"))
-         (stat (magit-file-status))
+         (ref (if (boundp 'magit-get-shortname)
+                  (magit-get-shortname "HEAD") nil))
+         (stat (if (boundp 'magit-file-status)
+                   (magit-file-status) nil))
          (x-stat eshell-last-command-status)
          (git-chunk
           (if ref
