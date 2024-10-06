@@ -476,7 +476,9 @@
 ;; quick select and copy
 (use-package easy-kill
   :ensure t
-  :bind (([remap kill-ring-save] . easy-kill)))
+  :bind
+  (([remap kill-ring-save] . easy-kill)
+   ([remap mark-sexp] . easy-mark)))
 
 ;; quick jump and act
 (defun avy-action-helpful (pt)
