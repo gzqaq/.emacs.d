@@ -88,13 +88,6 @@
   ;; utf-8 encoding
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8-unix)
-  ;; fonts
-  (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
-  (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
-  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
-  (set-fontset-font "fontset-default" 'han (font-spec :family "PingFang SC"))
-  (set-fontset-font "fontset-default" 'cjk-misc (font-spec :family "PingFang SC"))
-  (set-fontset-font "fontset-default" 'devanagari (font-spec :family "Lava Devanagari"))
   ;; precision scrolling
   (pixel-scroll-precision-mode 1)
   ;; no need to have an elisp buffer when starting up
@@ -124,6 +117,13 @@
   ;; lockfiles kill `npm start'
   (setq create-lockfiles nil)
   :config
+  ;; fonts
+  (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
+  (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
+  (set-fontset-font "fontset-default" 'han "PingFang SC")
+  (set-fontset-font "fontset-default" 'cjk-misc "PingFang SC")
+  (set-fontset-font "fontset-default" 'devanagari "Lava Devanagari")
   ;; no ringing
   (setq ring-bell-function #'ignore)
   ;; use xwidget-webkit to open link
