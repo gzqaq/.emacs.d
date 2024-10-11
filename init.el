@@ -796,7 +796,9 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :init
-  (setq markdown-command "multimarkdown"))
+  (setq markdown-command "multimarkdown")
+  :hook
+  (markdown-mode . zq/prettify-org))
 
 
 
