@@ -603,6 +603,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :delight
   :init
   (projectile-mode +1)
+  :custom
+  (projectile-cache-file (expand-file-name "~/.cache/emacs/projectile.cache"))
+  (projectile-known-projects-file
+   (expand-file-name "~/.cache/emacs/projectile-bookmarks.eld"))
   :bind
   (:map projectile-mode-map
         ("s-p" . projectile-command-map)
@@ -1030,7 +1034,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :defines (org-roam-capture-templates org-roam-mode-map)
   :custom
   (org-roam-directory (file-truename (expand-file-name "~/OneDrive/org-roam")))
-  (org-roam-db-location (expand-file-name "~/.org/org-roam.db"))
+  (org-roam-db-location (expand-file-name "~/.cache/emacs/org-roam.db"))
   (org-roam-graph-viewer (if (eq system-type 'darwin) 'open-svg-on-mac "/usr/bin/google-chrome-stable"))
   :config
   (setq org-roam-capture-templates
