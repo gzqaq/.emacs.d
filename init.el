@@ -607,6 +607,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (projectile-cache-file (expand-file-name "~/.cache/emacs/projectile.cache"))
   (projectile-known-projects-file
    (expand-file-name "~/.cache/emacs/projectile-bookmarks.eld"))
+  (projectile-project-search-path '(("~/Developer/" . 2)
+                                    ("~/Research/" . 2)))
   :bind
   (:map projectile-mode-map
         ("s-p" . projectile-command-map)
