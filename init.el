@@ -960,6 +960,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (org-fontify-whole-heading-line nil)
   (org-fontify-whole-block-delimiter-line t)
   (org-special-ctrl-a/e t)
+  ;; move attachment files by default
+  (org-attach-method 'mv)
+  ;; allow attachment inheritance
+  (org-attach-use-inheritance t)
   ;; allow alphabetical list
   (org-list-allow-alphabetical t)
   ;; Block changing TODO to DONE when dependency not satisfied
