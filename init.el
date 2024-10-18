@@ -846,6 +846,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                   :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
                   :version (lambda (_) (require 'tex-site) AUCTeX-version)))
 
+(defun tex-buffer-format ()
+  "Change layout for LaTeX buffers."
+  (setq-local fill-column 100))
+
 (use-package latex
   :ensure nil
   :init
@@ -870,7 +874,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (TeX-auto-local ".tex_auto")
   :hook
   (LaTeX-mode . turn-on-auto-fill)
-  (LaTeX-mode . prettify-symbols-mode))
+  (LaTeX-mode . prettify-symbols-mode)
+  (LaTeX-mode . tex-buffer-format))
 
 (use-package reftex
   :ensure nil
