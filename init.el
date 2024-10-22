@@ -708,6 +708,14 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                                      :ruff ( :enabled t
                                              :formatEnabled t
                                              :lineLength 88)
+                                     :jedi_completion
+                                     ( :enabled t
+                                       :include_params t
+                                       :include_class_objects t
+                                       :include_function_objects t
+                                       :fuzzy t
+                                       :eager t
+                                       :cache_for ["matplotlib" "numpy" "torch"])
                                      :flake8 (:enabled :json-false)
                                      :pycodestyle (:enabled :json-false)))))
   ;; rust
