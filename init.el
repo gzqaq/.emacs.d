@@ -750,7 +750,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :config
   ;; remove guess indent message
   (setq python-indent-guess-indent-offset-verbose nil)
-  (setq python-indent-offset 2))
+  (setq python-indent-offset 4))
 
 
 ;; use pet to correctly set up venv
