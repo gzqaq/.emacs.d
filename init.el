@@ -721,7 +721,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   ;; rust
   (add-to-list 'eglot-server-programs
                `(rust-mode . ("rust-analyzer" :initializationOptions
-                              ( :procMacro (:enbale t)
+                              ( :procMacro (:enable t)
                                 :cargo ( :buildScripts (:enable t)
                                          :features "all")))))
   :bind
