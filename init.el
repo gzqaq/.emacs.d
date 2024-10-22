@@ -631,6 +631,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   ;; check on save instead of running constantly
   (flycheck-check-syntax-automatically '(mode-enabled save))
   (flycheck-clang-language-standard "c++17")  ;; use C++17 std
+  (flycheck-disabled-checkers '(python-mypy))  ;; pylsp already has mypy plugin
   :hook
   ((prog-mode text-mode) . flycheck-mode))
 
@@ -695,7 +696,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (eldoc-echo-area-use-multiline-p t)
   (eglot-autoshutdown t)
   :hook
-  ((python-base-mode rust-mode c-mode c++-mode) . eglot-ensure)
+  ((rust-mode c-mode c++-mode) . eglot-ensure)
   :config
   ;; don't log every event--boost perf
   (fset #'jsonrpc--log-event #'ignore)
@@ -741,31 +742,21 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :config
   ;; remove guess indent message
   (setq python-indent-guess-indent-offset-verbose nil)
-  (setq python-indent-offset 2)
-  ;; Use IPython when available or fall back to regular Python
-  (cond
-   ((executable-find "ipython")
-    (progn
-      (setq python-shell-buffer-name "IPython")
-      (setq python-shell-interpreter "ipython")
-      (setq python-shell-interpreter-args "-i --simple-prompt")))
-   ((executable-find "python3")
-    (setq python-shell-interpreter "python3"))
-   ((executable-find "python2")
-    (setq python-shell-interpreter "python2"))
-   (t
-    (setq python-shell-interpreter "python"))))
+  (setq python-indent-offset 2))
 
-;; recognize conda env
-(use-package conda
+
+;; use pet to correctly set up venv
+(defun setup-python-venv ()
+  "Setup correct python executable and env."
+  (setq-local python-shell-interpreter (pet-executable-find "ipython")
+              python-shell-virtualenv-root (pet-virtualenv-root))
+  (pet-eglot-setup)
+  (eglot-ensure))
+
+(use-package pet
   :ensure t
-  :defer t
-  :init
-  (setq conda-anaconda-home "/opt/homebrew/Caskroom/miniforge/")
-  (setq conda-env-home-directory "/opt/homebrew/Caskroom/miniforge/")
-  :config
-  (conda-env-initialize-interactive-shells)
-  (conda-env-initialize-eshell))
+  :hook
+  (python-base-mode . setup-python-venv))
 
 ;; python in org
 (use-package ob-python
