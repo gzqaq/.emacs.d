@@ -699,6 +699,16 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :config
   ;; don't log every event--boost perf
   (fset #'jsonrpc--log-event #'ignore)
+  ;; pylsp config
+  (setq-default eglot-workspace-configuration
+                '(:pylsp (:plugins ( :black (:enabled :json-false)
+                                     :autopep8 (:enabled :json-false)
+                                     :yapf ( :enabled :json-false)
+                                     :ruff ( :enabled t
+                                             :formatEnabled t
+                                             :lineLength 88)
+                                     :flake8 (:enabled :json-false)
+                                     :pycodestyle (:enabled :json-false)))))
   ;; rust
   (add-to-list 'eglot-server-programs
                `(rust-mode . ("rust-analyzer" :initializationOptions
