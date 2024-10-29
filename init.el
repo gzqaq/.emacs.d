@@ -114,8 +114,6 @@
   (setq read-process-output-max (* 1024 1024))
   ;; highlight the current line
   ;; (global-hl-line-mode 1)  ; use beacon-mode
-  ;; lockfiles kill `npm start'
-  (setq create-lockfiles nil)
   :config
   ;; fonts
   (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
