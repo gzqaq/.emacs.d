@@ -98,8 +98,8 @@
   (setq initial-scratch-message "Welcome to Emacs!")
   ;; make the window title the buffer name
   (setq-default frame-title-format '("%b"))
-  ;; set fill column to 80 rather than 70 in all cases
-  (setq-default fill-column 80)
+  ;; set fill column to 100 rather than 70 in all cases
+  (setq-default fill-column 100)
   ;; disable startup screen
   (setq inhibit-startup-screen t)
   ;; stop confirming the killing of processes
@@ -856,10 +856,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                   :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
                   :version (lambda (_) (require 'tex-site) AUCTeX-version)))
 
-(defun tex-buffer-format ()
-  "Change layout for LaTeX buffers."
-  (setq-local fill-column 100))
-
 (use-package latex
   :ensure nil
   :init
@@ -884,8 +880,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (TeX-auto-local ".tex_auto")
   :hook
   (LaTeX-mode . turn-on-auto-fill)
-  (LaTeX-mode . prettify-symbols-mode)
-  (LaTeX-mode . tex-buffer-format))
+  (LaTeX-mode . prettify-symbols-mode))
 
 (use-package reftex
   :ensure nil
@@ -927,9 +922,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 ;;;========================
 
 (defun zq/prettify-org ()
-  "Use `variable-pitch-mode'.  Set `fill-column' to 100."
+  "Use `variable-pitch-mode'."
   (variable-pitch-mode t)
-  (setq-local fill-column 100)
   (setq-local line-spacing 0.3))
 
 (defun insert-delimiter (type)
