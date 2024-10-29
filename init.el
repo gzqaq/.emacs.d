@@ -125,7 +125,7 @@
   ;; no ringing
   (setq ring-bell-function #'ignore)
   ;; use xwidget-webkit to open link
-  (setq browse-url-browser-function 'xwidget-webkit-browse-url)
+  ;; (setq browse-url-browser-function 'xwidget-webkit-browse-url)
   :custom
   (line-spacing 0.2)
   :hook
