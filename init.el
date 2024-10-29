@@ -95,7 +95,7 @@
   ;; line-stype cursor
   (setq-default cursor-type 'bar)
   ;; welcome message in *scratch*
-  (setq initial-scratch-message "Welcome to Emacs!")
+  (setq initial-scratch-message nil)
   ;; make the window title the buffer name
   (setq-default frame-title-format '("%b"))
   ;; set fill column to 100 rather than 70 in all cases
