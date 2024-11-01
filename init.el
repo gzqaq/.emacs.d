@@ -544,6 +544,14 @@
 ;;; development
 ;;;========================
 
+;; remote
+(use-package tramp
+  :ensure nil
+  :config
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path t)
+  :custom
+  (tramp-own-remote-path '("~/.local/bin" "~/.cargo/bin")))
+
 ;; eshell
 (defun fancy-shell ()
   "A pretty eshell with git status.  Reference:
