@@ -615,6 +615,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    (expand-file-name "~/.cache/emacs/projectile-bookmarks.eld"))
   (projectile-project-search-path '(("~/Developer/" . 2)
                                     ("~/Research/" . 2)))
+  (projectile-jj-command "jj file list --no-pager . | tr '\\n' '\\0'")
   :bind
   (:map projectile-mode-map
         ("s-p" . projectile-command-map)
