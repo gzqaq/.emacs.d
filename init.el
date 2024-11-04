@@ -629,6 +629,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (setq wakatime-cli-path (expand-file-name "~/.wakatime/wakatime-cli")))
 
 ;; syntax check
+(defun check-with-c++17-std ()
+  "Make flycheck use c++17 std."
+  (setq-local flycheck-clang-language-standard "c++17"))
+
 (use-package flycheck
   :ensure t
   :defer t
@@ -636,10 +640,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   ;; check on save instead of running constantly
   (flycheck-check-syntax-automatically '(mode-enabled save))
-  (flycheck-clang-language-standard "c++17")  ;; use C++17 std
   (flycheck-disabled-checkers '(python-mypy))  ;; pylsp already has mypy plugin
   :hook
-  ((prog-mode text-mode) . flycheck-mode))
+  ((prog-mode text-mode) . flycheck-mode)
+  (c++-mode . check-with-c++17-std))
 
 ;; parse
 (use-package tree-sitter
