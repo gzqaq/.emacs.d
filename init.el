@@ -552,6 +552,11 @@
   :custom
   (tramp-own-remote-path '("~/.local/bin" "~/.cargo/bin")))
 
+;; docker
+(use-package docker
+  :ensure t
+  :bind ("C-c d" . docker))
+
 ;; eshell
 (defun fancy-shell ()
   "A pretty eshell with git status.  Reference:
