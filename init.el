@@ -774,7 +774,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   "Setup correct python executable and env."
   (setq-local python-shell-interpreter (pet-executable-find "ipython")
               python-shell-interpreter-args "-i --simple-prompt"
-              python-shell-virtualenv-root (pet-virtualenv-root))
+              python-shell-virtualenv-root (pet-virtualenv-root)
+              python-shell-extra-pythonpaths (list (pet-project-root)))
   (pet-eglot-setup)
   (eglot-ensure))
 
