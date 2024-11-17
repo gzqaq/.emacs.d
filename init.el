@@ -835,28 +835,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 
 
 
-;; typst
-(use-package typst-ts-mode
-  :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode"
-                 :files (:defaults "*.el")
-                 :main "typst-ts-mode.el")
-  :custom
-  (typst-ts-mode-indent-offset 2)
-  ;; don't add "--open" if you'd like `watch` to be an error detector
-  (typst-ts-mode-watch-options "--open"))
-
-  ;; experimental settings (I'm the main dev, so I enable these)
-  ;; (typst-ts-mode-enable-raw-blocks-highlight t)
-  ;; (typst-ts-mode-highlight-raw-blocks-at-startup t))
-
-(use-package typst-preview
-  :ensure (:host github :repo "havarddj/typst-preview.el"
-                 :depth 1 :main "typst-preview.el")
-  :custom
-  (typst-preview-browser "xwidget"))
-
-
-
 ;; latex
 ;; use AUCTeX
 (defun zq/org-latex-preview-scale-fn ()
