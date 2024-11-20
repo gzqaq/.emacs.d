@@ -1028,6 +1028,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 (defun update-last-modified-field ()
   "Update `last_modified' at save."
   (setq-local time-stamp-active t
+              time-stamp-line-limit 9
               time-stamp-start "#\\+last_modified:[ \t]+\\\\?\\[+"
               time-stamp-end "\\\\?\\]"
               time-stamp-format "%Y-%02m-%02d %3a %02H:%02M")
