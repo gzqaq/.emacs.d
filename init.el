@@ -541,6 +541,26 @@
 
 
 
+(use-package ellama
+  :ensure t
+  :bind ("C-c z l" . ellama-transient-main-menu)
+  :init
+  (setq ellama-language "Chinese")
+  (require 'llm-ollama)
+  (setopt ellama-provider (make-llm-ollama :chat-model "llama3.1:8b"))
+  (setopt ellama-coding-provider
+          (make-llm-ollama :chat-model "qwen2.5-coder:7b"
+                           ;; :embedding-model "nomic-embed-text"
+                           :default-chat-non-standard-params '(("num_ctx" . 32768))))
+  (setopt ellama-naming-provider (make-llm-ollama :chat-model "llama3.1:8b"))
+  (require 'llm-vertex)
+  (setopt ellama-summarization-provider (make-llm-vertex :project "xenon-monitor-408506"
+                                                         :chat-model "gemini-1.5-flash-002"))
+  (setopt ellama-translation-provider (make-llm-vertex :project "xenon-monitor-408506"
+                                                         :chat-model "gemini-1.5-flash-002")))
+
+
+
 ;;;========================
 ;;; development
 ;;;========================

@@ -10,3 +10,6 @@ eshell
 racket-mode
 recentf
 transient
+
+# cache
+ellama-sessions
