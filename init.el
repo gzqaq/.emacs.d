@@ -222,11 +222,22 @@
   (which-key-mode))
 
 ;; modus-theme
+(defun zq/apply-theme (appearance)
+  "Load the light or dark theme based on APPEARANCE.
+Emacs+ has `ns-system-appearance-change-functions' to toggle light and
+dark themes following the system.  It will pass APPEARANCE to the hooked
+function, which loads the theme accordingly."
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme 'modus-operandi :no-confirm))
+    ('dark (load-theme 'modus-vivendi :no-confirm)))
+  (message "Theme toggled!"))
+
 (use-package modus-themes
   :ensure t
   :demand t  ;; load immediately
   :config
-  (load-theme 'modus-operandi :no-confirm)
+  (add-hook 'ns-system-appearance-change-functions #'zq/apply-theme)
   :custom
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
