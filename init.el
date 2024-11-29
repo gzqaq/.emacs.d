@@ -1133,19 +1133,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
     (with-current-buffer mpv-buf
       (insert "\n=============\n\n"))))
 
-;; play white noise with MPV
-(defun white-noise (file)
-  "Play white noise from FILE."
-  (interactive "fWhite noise: ")
-  (let ((mpv-proc (start-process "mpv" nil
-                                 "mpv" "--quiet" (expand-file-name file))))
-    (when mpv-proc
-      (set-process-sentinel
-       mpv-proc
-       (lambda (proc status)
-         (if (string= status "finished\n")
-             (message "White noise ended. Take a break!")))))))
-
 (use-package utils
   :ensure nil
   :load-path "lisp"
@@ -1154,8 +1141,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    ("C-c z c" . open-my-config)
    ("C-c z a" . open-my-agenda)
    ("C-c z m u" . mpv-url)
-   ("C-c z m m" . mpv-media)
-   ("C-c z w" . white-noise)))
+   ("C-c z m m" . mpv-media)))
 
 
 
