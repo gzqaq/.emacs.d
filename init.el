@@ -162,9 +162,9 @@ respect these settings."
       ;; GUI frame setup
       (progn
         ;; Set fonts
-        (set-fontset-font t 'han (font-spec :family "Noto Sans CJK SC"))
-        (set-fontset-font t 'cjk-misc (font-spec :family "Noto Sans CJK SC"))
-        (set-fontset-font t 'devanagari (font-spec :family "Noto Sans Devanagari"))
+        (set-fontset-font t 'han (font-spec :family "PingFang SC"))
+        (set-fontset-font t 'cjk-misc (font-spec :family "PingFang SC"))
+        (set-fontset-font t 'devanagari (font-spec :family "Lava Devanagari"))
         (message "Applied GUI-specific font settings.")))))
 
 (add-hook 'after-make-frame-functions #'zq/fonts-setup)
