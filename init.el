@@ -77,6 +77,7 @@
 ;;; basic features
 ;;;========================
 
+
 (use-package emacs
   :ensure nil
   :init
@@ -151,6 +152,7 @@
 ;;; appearance
 ;;;========================
 
+
 ;; column and line number
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -197,7 +199,6 @@
   :config
   (which-key-mode))
 
-
 ;; modus-theme
 (use-package modus-themes
   :ensure t
@@ -229,6 +230,7 @@
 ;;;========================
 ;;; completion at point
 ;;;========================
+
 
 (use-package cape
   :ensure t
@@ -286,6 +288,7 @@
 ;;; minibuffer completion
 ;;;========================
 
+
 ;; vertical completion UI based on the default completion system
 (use-package vertico
   :ensure t
@@ -314,6 +317,7 @@
 ;;;========================
 ;;; enhancements
 ;;;========================
+
 
 ;; Example configuration for Consult
 (use-package consult
@@ -503,8 +507,6 @@
   (add-hook 'elpaca-after-init-hook
             (lambda () (global-whitespace-cleanup-mode t))))
 
-
-
 (use-package ellama
   :ensure t
   :bind ("C-c z l" . ellama-transient-main-menu)
@@ -522,6 +524,7 @@
 ;;;========================
 ;;; development
 ;;;========================
+
 
 ;; remote
 (use-package tramp
@@ -725,15 +728,11 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    ("C-c l r n" . eglot-rename)
    ("C-c l s" . eglot-shutdown)))
 
-
-
 ;; C/C++
 (use-package clang-format
   :ensure t
   :custom
   (clang-format-style "Google"))
-
-
 
 ;; python
 (use-package python
@@ -743,7 +742,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   ;; remove guess indent message
   (setq python-indent-guess-indent-offset-verbose nil)
   (setq python-indent-offset 4))
-
 
 ;; use pet to correctly set up venv
 (defun setup-python-venv ()
@@ -767,8 +765,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :commands
   (org-babel-execute:python))
 
-
-
 ;; rust
 (use-package rustic
   :ensure t
@@ -781,8 +777,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :defer t
   :hook
   ((rust-ts-mode rustic-mode) . cargo-minor-mode))
-
-
 
 ;; yaml
 (defun zq/yaml-map ()
@@ -798,8 +792,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :hook
   (yaml-mode . zq/yaml-map))
 
-
-
 ;; markdown
 (use-package markdown-mode
   :ensure t
@@ -808,8 +800,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (setq markdown-command "multimarkdown")
   :hook
   (markdown-mode . zq/prettify-org))
-
-
 
 ;; latex
 ;; use AUCTeX
@@ -872,8 +862,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   (pdf-view-display-size 'fit-page))
 
-
-
 ;; SICP
 (use-package sicp
   :ensure t)
@@ -891,6 +879,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 ;;;========================
 ;;; org-mode
 ;;;========================
+
 
 (defun zq/prettify-org ()
   "Use `variable-pitch-mode'."
@@ -1106,24 +1095,22 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 ;;; everyday use
 ;;;========================
 
+
 ;; RSS feed reader
 (use-package elfeed
   :ensure t
   :custom
   (elfeed-feeds '("https://pypi.org/rss/project/jax-metal/releases.xml")))
 
-
 (defun open-my-config ()
   "Open my init.el."
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
 
-
 (defun open-my-agenda ()
   "Open agenda file."
   (interactive)
   (find-file (expand-file-name "~/OneDrive/org-life/agenda.org")))
-
 
 ;; use MPV to stream URL
 (defun mpv-url (url)
@@ -1136,7 +1123,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
       (insert (format "URL: %s\n" url))
       (insert "\n=============\n\n"))))
 
-
 ;; use MPV to play local media
 (defun mpv-media (file)
   "Use `mpv' to play FILE."
@@ -1146,7 +1132,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
     (start-process "mpv" mpv-buf "mpv" "--quiet" fpath)
     (with-current-buffer mpv-buf
       (insert "\n=============\n\n"))))
-
 
 ;; play white noise with MPV
 (defun white-noise (file)
@@ -1160,7 +1145,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
        (lambda (proc status)
          (if (string= status "finished\n")
              (message "White noise ended. Take a break!")))))))
-
 
 (use-package utils
   :ensure nil
