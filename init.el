@@ -100,9 +100,9 @@
   ;; no ringing
   (setq ring-bell-function #'ignore)
   ;; default fonts
-  (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
-  (set-face-attribute 'fixed-pitch nil :family "Iosevka Slab" :height 120 :weight 'regular)
-  (set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 120 :weight 'regular)
+  (set-face-attribute 'default nil :family "SF Mono" :height 100 :weight 'regular)
+  (set-face-attribute 'fixed-pitch nil :family "Iosevka Slab" :height 100 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 100 :weight 'regular)
   :custom
   (line-spacing 0.2)
   ;; stop confirming the killing of processes
@@ -1022,7 +1022,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure t
   :defer t
   :config
-  (set-face-attribute 'org-modern-symbol nil :family "Iosevka" :height 120 :weight 'regular)
+  (set-face-attribute 'org-modern-symbol nil :family "Iosevka" :height 110 :weight 'regular)
   :custom
   (org-modern-table nil)
   :hook
