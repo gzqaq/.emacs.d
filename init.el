@@ -139,9 +139,9 @@
 
 
 ;; fonts
-(set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
-(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
+(set-face-attribute 'default nil :family "SF Mono" :height 110 :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 110 :weight 'regular)
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 110 :weight 'regular)
 (set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
 (set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
 (set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
@@ -988,7 +988,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure t
   :defer t
   :config
-  (set-face-attribute 'org-modern-symbol nil :family "Iosevka" :height 120 :weight 'regular)
+  (set-face-attribute 'org-modern-symbol nil :family "Iosevka" :height 110 :weight 'regular)
   :custom
   (org-modern-table nil)
   :hook
