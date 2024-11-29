@@ -112,9 +112,9 @@
   (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
   (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
   (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
-  (set-fontset-font "fontset-default" 'han "PingFang SC")
-  (set-fontset-font "fontset-default" 'cjk-misc "PingFang SC")
-  (set-fontset-font "fontset-default" 'devanagari "Lava Devanagari")
+  (set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
+  (set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
+  (set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
   ;; no ringing
   (setq ring-bell-function #'ignore)
   :custom
@@ -122,22 +122,6 @@
   :hook
   ;; show the fill column when programming
   (prog-mode . display-fill-column-indicator-mode))
-
-;; macos
-(when (eq system-type 'darwin)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier 'none)
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 5)
-                                      ((control))))
-  (dolist (multiple '("" "double-" "triple-"))
-    (dolist (direction '("right" "left"))
-      (global-set-key (read-kbd-macro (concat "<" multiple "wheel-" direction ">")) 'ignore)))
-  (global-set-key (kbd "M-`") 'ns-next-frame)
-  (global-set-key (kbd "M-h") 'ns-do-hide-emacs)
-  (global-set-key (kbd "M-˙") 'ns-do-hide-others)
-  (with-eval-after-load 'nxml-mode
-    (define-key nxml-mode-map (kbd "M-h") nil))
-  (global-set-key (kbd "M-ˍ") 'ns-do-hide-others))
 
 ;; automatically pair delimiters
 (use-package elec-pair
@@ -153,9 +137,8 @@
   ((prog-mode . electric-pair-local-mode)
    (text-mode . elec-pair-local-text-mode)))
 
-
 ;; backup in the same location
-(setq backup-directory-alist '(("." . "/private/tmp/emacs-backup"))
+(setq backup-directory-alist '(("." . "/tmp/emacs-backup"))
       backup-by-copying t
       version-control t
       delete-old-versions t
@@ -216,16 +199,6 @@
 
 
 ;; modus-theme
-
-;; use emacs+'s `ns-system-appearance-change-functions' to toggle light/dark
-(defun zq/apply-theme (appearance)
-  "Load theme, taking current system APPEARANCE into consideration."
-  (mapc #'disable-theme custom-enabled-themes)
-  (pcase appearance
-    ('light (load-theme 'modus-operandi :no-confirm))
-    ('dark (load-theme 'modus-vivendi :no-confirm)))
-  (message "Theme toggled!"))
-
 (use-package modus-themes
   :ensure t
   :init
@@ -248,7 +221,7 @@
                 (3 . (overline 1.1))
                 (t . (monochrome)))))
   :config
-  (add-hook 'ns-system-appearance-change-functions #'zq/apply-theme)
+  (load-theme 'modus-operandi :no-confirm)
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
 
@@ -538,17 +511,11 @@
   :init
   (setq ellama-language "Chinese")
   (require 'llm-ollama)
-  (setopt ellama-provider (make-llm-ollama :chat-model "llama3.1:8b"))
-  (setopt ellama-coding-provider
-          (make-llm-ollama :chat-model "qwen2.5-coder:7b"
-                           ;; :embedding-model "nomic-embed-text"
-                           :default-chat-non-standard-params '(("num_ctx" . 32768))))
-  (setopt ellama-naming-provider (make-llm-ollama :chat-model "llama3.1:8b"))
-  (require 'llm-vertex)
-  (setopt ellama-summarization-provider (make-llm-vertex :project "xenon-monitor-408506"
-                                                         :chat-model "gemini-1.5-flash-002"))
-  (setopt ellama-translation-provider (make-llm-vertex :project "xenon-monitor-408506"
-                                                         :chat-model "gemini-1.5-flash-002")))
+  (setopt ellama-provider (make-llm-ollama :chat-model "llama3.2:latest"))
+  (setopt ellama-coding-provider (make-llm-ollama :chat-model "llama3.2:latest"))
+  (setopt ellama-naming-provider (make-llm-ollama :chat-model "llama3.2:latest"))
+  (setopt ellama-summarization-provider (make-llm-ollama :chat-model "llama3.2:latest"))
+  (setopt ellama-translation-provider (make-llm-ollama :chat-model "llama3.2:latest")))
 
 
 
@@ -1055,7 +1022,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   (org-roam-directory (file-truename (expand-file-name "~/OneDrive/org-roam")))
   (org-roam-db-location (expand-file-name "~/.cache/emacs/org-roam.db"))
-  (org-roam-graph-viewer (if (eq system-type 'darwin) 'open-svg-on-mac "/usr/bin/google-chrome-stable"))
   :config
   (setq org-roam-capture-templates
         '(("d" "default" plain "%?"
