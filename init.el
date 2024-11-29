@@ -152,7 +152,7 @@
    (text-mode . elec-pair-local-text-mode)))
 
 ;; backup in the same location
-(setq backup-directory-alist '(("." . "/tmp/emacs-backup"))
+(setq backup-directory-alist '(("." . "/private/tmp/emacs-backup"))
       backup-by-copying t
       version-control t
       delete-old-versions t
