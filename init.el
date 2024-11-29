@@ -156,9 +156,9 @@
 (defun zq/set-fonts ()
   "Set default fonts.  Since daemon-mode doesn't respect these settings, manually set them."
   (interactive)
-  (set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
-  (set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
-  (set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
+  (set-fontset-font "fontset-default" 'han "PingFang SC")
+  (set-fontset-font "fontset-default" 'cjk-misc "PingFang SC")
+  (set-fontset-font "fontset-default" 'devanagari "Lava Devanagari")
   (message "Set fonts for 'han 'cjk-misc and 'devanagari. Done!"))
 
 ;; column and line number
