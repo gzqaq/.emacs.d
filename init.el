@@ -821,6 +821,15 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                   :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
                   :version (lambda (_) (require 'tex-site) AUCTeX-version)))
 
+;; shortcuts for math templates or symbols
+;; https://github.com/cdominik/cdlatex TODO: org-roam note
+;; or `cdlatex-command-help' to see a full list of abbr.
+(use-package cdlatex
+  :ensure t
+  :delight
+  :hook
+  (LaTeX-mode . turn-on-cdlatex))
+
 (use-package latex
   :ensure nil
   :init
