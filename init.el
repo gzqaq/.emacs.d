@@ -59,11 +59,6 @@
   :ensure t
   :after use-package)
 
-;; use `:bind'
-;; (use-package bind-key
-;;   :ensure t
-;;   :after use-package)
-
 ;; set paths correctly
 ;; unnecessary since Emacs+ inject `PATH' by default
 (use-package exec-path-from-shell
@@ -112,8 +107,6 @@
   (delete-selection-mode t)
   ;; increase the amount of data which emacs read from processes
   (setq read-process-output-max (* 1024 1024))
-  ;; highlight the current line
-  ;; (global-hl-line-mode 1)  ; use beacon-mode
   :config
   ;; fonts
   (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
@@ -124,8 +117,6 @@
   (set-fontset-font "fontset-default" 'devanagari "Lava Devanagari")
   ;; no ringing
   (setq ring-bell-function #'ignore)
-  ;; use xwidget-webkit to open link
-  ;; (setq browse-url-browser-function 'xwidget-webkit-browse-url)
   :custom
   (line-spacing 0.2)
   :hook
