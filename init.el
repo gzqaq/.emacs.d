@@ -807,12 +807,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 
 ;; latex
 ;; use AUCTeX
-(defun zq/org-latex-preview-scale-fn ()
-  "Org LaTeX preview scale function."
-  (* (/ 10.0
-        (preview-document-pt))
-     preview-scale))
-
 (use-package auctex
   :ensure (auctex :repo "https://git.savannah.gnu.org/git/auctex.git"
                   :branch "main"
@@ -830,12 +824,17 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :hook
   (LaTeX-mode . turn-on-cdlatex))
 
+;; async and automatic render for LaTeX images and equations
+;; broken in org files with src blocks
+(use-package xenops
+  :ensure t
+  :delight
+  :hook
+  (LaTeX-mode . xenops-mode))
+
 (use-package latex
   :ensure nil
   :init
-  (setq-default preview-scale 1.2
-                preview-scale-function #'zq/org-latex-preview-scale-fn)
-  ;; :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
   (setq preview-auto-cache-preamble nil)
@@ -1076,13 +1075,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 (use-package ox-epub
   :ensure t
   :after org)
-
-;; use auctex preview
-(use-package org-auctex
-  :ensure nil
-  :load-path "lisp"
-  :hook
-  (org-mode . org-auctex-mode))
 
 ;; citation
 (use-package citar
