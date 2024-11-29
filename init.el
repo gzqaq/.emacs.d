@@ -778,6 +778,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :hook
   ((rust-ts-mode rustic-mode) . cargo-minor-mode))
 
+;; lua
+(use-package lua-mode
+  :ensure t)
+
 ;; yaml
 (defun zq/yaml-map ()
   "Define map for yaml-mode."
