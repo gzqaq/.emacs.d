@@ -844,8 +844,9 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   (TeX-auto-local ".tex_auto")
   :hook
-  (LaTeX-mode . turn-on-auto-fill)
-  (LaTeX-mode . prettify-symbols-mode))
+  (LaTeX-mode . TeX-fold-mode)
+  (LaTeX-mode . prettify-symbols-mode)
+  (LaTeX-mode . turn-on-auto-fill))
 
 (use-package reftex
   :ensure nil
