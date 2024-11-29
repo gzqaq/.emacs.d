@@ -131,6 +131,22 @@
   ;; show the fill column when programming
   (prog-mode . display-fill-column-indicator-mode))
 
+;; keyboard and mouse behavior for macos
+(when (eq system-type 'darwin)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'none)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 5)
+                                      ((control))))
+  (dolist (multiple '("" "double-" "triple-"))
+    (dolist (direction '("right" "left"))
+      (global-set-key (read-kbd-macro (concat "<" multiple "wheel-" direction ">")) 'ignore)))
+  (global-set-key (kbd "M-`") 'ns-next-frame)
+  (global-set-key (kbd "M-h") 'ns-do-hide-emacs)
+  (global-set-key (kbd "M-˙") 'ns-do-hide-others)
+  (with-eval-after-load 'nxml-mode
+    (define-key nxml-mode-map (kbd "M-h") nil))
+  (global-set-key (kbd "M-_") 'ns-do-hide-others))
+
 ;; automatically pair delimiters
 (use-package elec-pair
   :ensure nil
