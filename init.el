@@ -716,7 +716,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                                        :include_function_objects t
                                        :fuzzy t
                                        :eager t
-                                       :cache_for ["matplotlib" "numpy" "torch"])
+                                       :cache_for ["matplotlib" "numpy" "torch" "jax" "flax"])
                                      :flake8 (:enabled :json-false)
                                      :pycodestyle (:enabled :json-false)))))
   ;; rust
