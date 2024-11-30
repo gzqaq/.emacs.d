@@ -109,13 +109,6 @@
   ;; increase the amount of data which emacs read from processes
   (setq read-process-output-max (* 1024 1024))
   :config
-  ;; fonts
-  (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
-  (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
-  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
-  (set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
-  (set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
-  (set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
   ;; no ringing
   (setq ring-bell-function #'ignore)
   :custom
@@ -152,6 +145,14 @@
 ;;; appearance
 ;;;========================
 
+
+;; fonts
+(set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
+(set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
+(set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
+(set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
 
 ;; column and line number
 (column-number-mode)
