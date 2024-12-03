@@ -543,6 +543,7 @@
 ;; docker
 (use-package docker
   :ensure t
+  :mode ("Dockerfile" . dockerfile-ts-mode)
   :bind ("C-c d" . docker))
 
 ;; eshell
@@ -659,6 +660,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
           (c . ("https://github.com/tree-sitter/tree-sitter-c"))
           (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (cmake . ("https://github.com/uyha/tree-sitter-cmake"))
+          (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
           (json . ("https://github.com/tree-sitter/tree-sitter-json"))
           (make . ("https://github.com/alemuller/tree-sitter-make"))
           (python . ("https://github.com/tree-sitter/tree-sitter-python"))
