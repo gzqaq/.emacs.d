@@ -1102,6 +1102,13 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup))
 
+;; tighter Citar and Org-roam integration
+(use-package citar-org-roam
+  :ensure t
+  :after (org-roam citar)
+  :config
+  (citar-org-roam-mode))
+
 
 
 ;;;========================
