@@ -512,7 +512,6 @@
   :ensure t
   :bind ("C-c z l" . ellama-transient-main-menu)
   :init
-  (setq ellama-language "Chinese")
   (require 'llm-ollama)
   (setopt ellama-provider (make-llm-ollama :chat-model "llama3.1:8b"))
   (setopt ellama-coding-provider (make-llm-ollama :chat-model "qwen2.5-coder:7b"
@@ -522,7 +521,9 @@
   (setopt ellama-summarization-provider (make-llm-ollama :chat-model "llama3.1:8b"
                                                          :embedding-model "nomic-embed-text"))
   (setopt ellama-translation-provider (make-llm-ollama :chat-model "qwen2.5:7b"
-                                                       :embedding-model "nomic-embed-text")))
+                                                       :embedding-model "nomic-embed-text"))
+  :custom
+  (ellama-language "Chinese"))
 
 
 
