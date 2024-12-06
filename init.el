@@ -196,27 +196,25 @@
 (use-package modus-themes
   :ensure t
   :demand t  ;; load immediately
-  :init
-  (setq modus-themes-org-blocks 'tinted-background
-        modus-themes-italic-constructs t
-        modus-themes-bold-constructs t
-        modus-themes-mixed-fonts t
-        modus-themes-variable-pitch-ui nil
-        modus-themes-common-palette-overrides
-        '((bg-mode-line-active bg-main)
-          (bg-mode-line-inactive bg-dim)
-          (border-mode-line-inactive bg-inactive)
-          (fringe subtle)
-          (bg-paren-match bg-yellow-intense)
-          (custom-set-faces
-           '(mode-line ((t :family "SF Mono" :height 100 :weight 'regular))))))
-  (setq modus-themes-headings
-        (quote ((1 . (overline variable-pitch 1.4))
-                (2 . (overline variable-pitch 1.25))
-                (3 . (overline 1.1))
-                (t . (monochrome)))))
   :config
   (load-theme 'modus-operandi :no-confirm)
+  :custom
+  (modus-themes-org-blocks 'tinted-bachground)  ;; deprecated
+  (modus-themes-italic-constructs t)
+  (modus-themes-bold-constructs t)
+  (modus-themes-mixed-fonts t)
+  (modus-themes-variable-pitch-ui nil)
+  (modus-themes-common-palette-overrides
+   '((bg-mode-line-active bg-main)
+     (bg-mode-line-inactive bg-dim)
+     (border-mode-line-inactive bg-inactive)
+     (fringe subtle)
+     (bg-paren-match bg-yellow-intense)
+     (custom-set-faces '(mode-line ((t :family "SF Mono" :height 100 :weight 'regular))))))
+  (modus-themes-headings '((1 . (overline variable-pitch 1.4))
+                           (2 . (overline variable-pitch 1.25))
+                           (3 . (overline 1.1))
+                           (t . (monochrome))))
   :bind ([f5] . modus-themes-toggle))
 
 
