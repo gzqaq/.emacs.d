@@ -211,10 +211,10 @@
      (fringe subtle)
      (bg-paren-match bg-yellow-intense)
      (custom-set-faces '(mode-line ((t :family "SF Mono" :height 100 :weight 'regular))))))
-  (modus-themes-headings '((1 . (overline variable-pitch 1.4))
-                           (2 . (overline variable-pitch 1.25))
-                           (3 . (overline 1.1))
-                           (t . (monochrome))))
+  (modus-themes-headings '((1 . (variable-pitch 1.5))
+                           (2 . (variable-pitch 1.3))
+                           (3 . (variable-pitch 1.2))
+                           (t . (1.1))))
   :bind ([f5] . modus-themes-toggle))
 
 
