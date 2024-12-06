@@ -195,6 +195,7 @@
 ;; modus-theme
 (use-package modus-themes
   :ensure t
+  :demand t  ;; load immediately
   :init
   (setq modus-themes-org-blocks 'tinted-background
         modus-themes-italic-constructs t
@@ -216,7 +217,7 @@
                 (t . (monochrome)))))
   :config
   (load-theme 'modus-operandi :no-confirm)
-  (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
+  :bind ([f5] . modus-themes-toggle))
 
 
 
@@ -783,18 +784,14 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure t)
 
 ;; yaml
-(defun zq/yaml-map ()
-  "Define map for yaml-mode."
-  (define-key yaml-mode-map "\C-m" 'newline-and-indent))
-
 (use-package yaml-mode
   :ensure t
   :delight
   :mode
   ("\\.yml\\'" . yaml-mode)
   ("\\.yaml\\'" . yaml-mode)
-  :hook
-  (yaml-mode . zq/yaml-map))
+  :bind
+  (:map yaml-mode-map ("C-m" . newline-and-indent)))
 
 ;; markdown
 (use-package markdown-mode
