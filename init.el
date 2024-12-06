@@ -1094,6 +1094,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 ;; tighter Citar and Org-roam integration
 (use-package citar-org-roam
   :ensure t
+  :delight
   :after (org-roam citar)
   :config
   (citar-org-roam-mode))
