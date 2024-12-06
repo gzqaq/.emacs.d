@@ -199,7 +199,6 @@
   :config
   (load-theme 'modus-operandi :no-confirm)
   :custom
-  (modus-themes-org-blocks 'tinted-bachground)  ;; deprecated
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
   (modus-themes-mixed-fonts t)
