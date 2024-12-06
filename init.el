@@ -59,6 +59,14 @@
   :ensure t
   :after use-package)
 
+;; set `PATH' correctly
+;; though Emacs+ injects it into plist, it seems to break in macos15
+(use-package exec-path-from-shell
+  :ensure t
+  :demand t
+  :config
+  (add-hook 'after-init-hook #'exec-path-from-shell-initialize))
+
 ;; block until current queue processed.
 ;; necessary to use these keywords at the top-level.
 (elpaca-wait)
