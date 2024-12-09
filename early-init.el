@@ -8,7 +8,7 @@
 ;;; Code:
 
 ;; defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum)
+;; (setq gc-cons-threshold most-positive-fixnum)
 
 ;; don't check mtime on elisp bytecode using startup time
 ;; (setq load-prefer-newer noninteractive)
