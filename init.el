@@ -814,6 +814,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 (use-package cdlatex
   :ensure t
   :delight
+  :custom
+  (cdlatex-command-alist
+   '(("bb" "Insert \\mathbb{}" "\\mathbb{?}" cdlatex-position-cursor nil nil t)
+     ("kl" "Insert D_{\\textrm{KL}}" "D_{\\textrm{KL}} " nil nil nil t)))
   :hook
   (LaTeX-mode . turn-on-cdlatex))
 
