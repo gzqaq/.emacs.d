@@ -103,6 +103,10 @@
   :config
   ;; no ringing
   (setq ring-bell-function #'ignore)
+  ;; default fonts
+  (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
+  (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
   :custom
   (line-spacing 0.2)
   :hook
@@ -139,12 +143,13 @@
 
 
 ;; fonts
-(set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
-(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
-(set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
-(set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
-(set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
+(defun zq/set-fonts ()
+  "Set default fonts.  Since daemon-mode doesn't respect these settings, manually set them."
+  (interactive)
+  (set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
+  (set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
+  (set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
+  (message "Set fonts for 'han 'cjk-misc and 'devanagari. Done!"))
 
 ;; column and line number
 (column-number-mode)
