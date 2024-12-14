@@ -90,10 +90,6 @@
   (setq-default fill-column 100)
   ;; disable startup screen
   (setq inhibit-startup-screen t)
-  ;; stop confirming the killing of processes
-  (setq confirm-kill-processes nil)
-  ;; short answers (y/n/p)
-  (setq use-short-answers t)
   ;; visually indicates pair of matching parentheses
   (show-paren-mode t)
   ;; delete selection when start typing
@@ -109,6 +105,10 @@
   (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
   :custom
   (line-spacing 0.2)
+  ;; stop confirming the killing of processes
+  (confirm-kill-processes nil)
+  ;; short answers (y/n/p)
+  (use-short-answers t)
   :hook
   ;; show the fill column when programming
   (prog-mode . display-fill-column-indicator-mode))
