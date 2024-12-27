@@ -1151,6 +1151,17 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
     (with-current-buffer mpv-buf
       (insert "\n=============\n\n"))))
 
+(defun translate-markdown-buffer-to-org-via-ellama ()
+  "Use `ellama--translate-markdown-to-org-filter' to translate markdown to org in current buffer."
+  (interactive)
+  (let* ((text (buffer-substring-no-properties (point-min) (point-max)))
+         (buf (get-buffer-create (format "md2org %s..." (substring text 0 13)))))
+    (with-current-buffer buf
+      (delete-region (point-min) (point-max))
+      (org-mode)
+      (insert (ellama--translate-markdown-to-org-filter text)))
+    (switch-to-buffer buf)))
+
 (use-package utils
   :ensure nil
   :load-path "lisp"
