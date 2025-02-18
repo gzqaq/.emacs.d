@@ -704,8 +704,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :hook
   ((rust-mode c-mode c++-mode) . eglot-ensure)
   :config
-  ;; don't log every event--boost perf
-  (fset #'jsonrpc--log-event #'ignore)
   ;; pylsp config
   (setq-default eglot-workspace-configuration
                 '(:pylsp (:plugins ( :black (:enabled :json-false)
@@ -738,6 +736,12 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    ("C-c l l" . eglot)
    ("C-c l r n" . eglot-rename)
    ("C-c l s" . eglot-shutdown)))
+
+;; boost eglot -- requires "cargo install emacs-lsp-booster"
+(use-package eglot-booster
+  :ensure (:type git :host github :repo "jdtsmith/eglot-booster")
+  :after eglot
+  :config (eglot-booster-mode))
 
 ;; C/C++
 (use-package clang-format
@@ -1188,7 +1192,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages nil)
+ '(tramp-verbose 6))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
