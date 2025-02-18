@@ -532,7 +532,11 @@
   :config
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path t)
   :custom
-  (tramp-own-remote-path '("~/.local/bin" "~/.cargo/bin")))
+  (tramp-own-remote-path '("~/.local/bin" "~/.cargo/bin"))
+  ;; don't find vc on remote, as I won't use emacs to vc
+  (vc-ignore-dir-regexp (format "\\(%s\\)\\|\\(%s\\)"
+                                vc-ignore-dir-regexp
+                                tramp-file-name-regexp)))
 
 ;; docker
 (use-package docker
@@ -604,6 +608,11 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (projectile-project-search-path '(("~/Developer/" . 2)
                                     ("~/Research/" . 2)))
   (projectile-jj-command "jj file list --no-pager . | tr '\\n' '\\0'")
+  :config
+  ;; for faster tramp (https://github.com/bbatsov/projectile/issues/1232#issuecomment-1890965121)
+  (advice-add 'projectile-project-root :before-while
+              (lambda (&optional dir)
+                (not (file-remote-p (or dir default-directory)))))
   :bind
   (:map projectile-mode-map
         ("s-p" . projectile-command-map)
