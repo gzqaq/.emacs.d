@@ -608,11 +608,11 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (projectile-project-search-path '(("~/Developer/" . 2)
                                     ("~/Research/" . 2)))
   (projectile-jj-command "jj file list --no-pager . | tr '\\n' '\\0'")
-  :config
-  ;; for faster tramp (https://github.com/bbatsov/projectile/issues/1232#issuecomment-1890965121)
-  (advice-add 'projectile-project-root :before-while
-              (lambda (&optional dir)
-                (not (file-remote-p (or dir default-directory)))))
+  ;; reduce the range for projectile to search for project root for faster tramp
+  (projectile-project-root-functions '(projectile-root-local
+                                       projectile-root-bottom-up
+                                       projectile-root-marked))
+  (projectile-project-root-files-bottom-up '(".jj" ".git"))
   :bind
   (:map projectile-mode-map
         ("s-p" . projectile-command-map)
