@@ -533,6 +533,8 @@
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path t)
   :custom
   (tramp-own-remote-path '("~/.local/bin" "~/.cargo/bin"))
+  ;; disable file lock for faster tramp
+  (remote-file-name-inhibit-locks t)
   ;; don't find vc on remote, as I won't use emacs to vc
   (vc-ignore-dir-regexp (format "\\(%s\\)\\|\\(%s\\)"
                                 vc-ignore-dir-regexp
@@ -1192,8 +1194,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil)
- '(tramp-verbose 6))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
