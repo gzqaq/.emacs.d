@@ -609,6 +609,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    (expand-file-name "~/.cache/emacs/projectile-bookmarks.eld"))
   (projectile-project-search-path '(("~/Developer/" . 2)
                                     ("~/Research/" . 2)))
+  ;; ignore git repos installed by package managers
+  (projectile-ignored-project-function 'start-with-package-manager-prefix-p)
   (projectile-jj-command "jj file list --no-pager . | tr '\\n' '\\0'")
   ;; reduce the range for projectile to search for project root for faster tramp
   (projectile-project-root-functions '(projectile-root-local
@@ -619,6 +621,11 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (:map projectile-mode-map
         ("s-p" . projectile-command-map)
         ("C-c p" . projectile-command-map)))
+
+(defun start-with-package-manager-prefix-p (string)
+  "Return t if STRING start with locations where package managers store files."
+  (or (string-prefix-p "/opt/homebrew" string)
+      (string-prefix-p "~/.emacs.d/elpaca" string)))
 
 ;; wakatime
 (use-package wakatime-mode
