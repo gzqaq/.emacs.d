@@ -720,7 +720,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                                      :yapf ( :enabled :json-false)
                                      :ruff ( :enabled t
                                              :formatEnabled t
-                                             :lineLength 88)
+                                             :lineLength 100)
                                      :jedi_completion
                                      ( :enabled t
                                        :include_params t
