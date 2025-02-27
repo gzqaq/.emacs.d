@@ -729,6 +729,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                                        :fuzzy t
                                        :eager t
                                        :cache_for ["matplotlib" "numpy" "torch" "jax" "flax"])
+                                     :rope_autoimport ( :enabled t)
                                      :flake8 (:enabled :json-false)
                                      :pycodestyle (:enabled :json-false)))))
   ;; rust
