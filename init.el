@@ -776,13 +776,13 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
               python-shell-interpreter-args "-i --simple-prompt"
               python-shell-virtualenv-root (pet-virtualenv-root)
               python-shell-extra-pythonpaths (list (pet-project-root)))
-  (pet-eglot-setup)
   (eglot-ensure))
 
 (use-package pet
   :ensure t
   :hook
-  (python-base-mode . setup-python-venv))
+  (python-base-mode . setup-python-venv)
+  (python-base-mode . pet-mode))
 
 ;; python in org
 (use-package ob-python
