@@ -729,8 +729,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                                        :fuzzy t
                                        :eager t
                                        :cache_for ["matplotlib" "numpy" "torch" "jax" "flax"])
-                                     :rope_autoimport ( :enabled t)
-                                     :pylsp_mypy ( :live_mode :json-false :dmypy t)
+                                     :rope_autoimport ( :enabled :json-false)
+                                     ;; :pylsp_mypy ( :live_mode :json-false :dmypy t)
                                      :flake8 (:enabled :json-false)
                                      :pycodestyle (:enabled :json-false)))))
   ;; rust
@@ -749,10 +749,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    ("C-c l s" . eglot-shutdown)))
 
 ;; boost eglot -- requires "cargo install emacs-lsp-booster"
-(use-package eglot-booster
-  :ensure (:type git :host github :repo "jdtsmith/eglot-booster")
-  :after eglot
-  :config (eglot-booster-mode))
+;; (use-package eglot-booster
+;;   :ensure (:type git :host github :repo "jdtsmith/eglot-booster")
+;;   :after eglot
+;;   :config (eglot-booster-mode))
 
 ;; C/C++
 (use-package clang-format
