@@ -1103,6 +1103,11 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure t
   :after org)
 
+;; org to markdown (github flavored)
+(use-package ox-gfm
+  :ensure t
+  :after org)
+
 ;; citation
 (use-package citar
   :ensure t
