@@ -101,8 +101,8 @@
   (setq ring-bell-function #'ignore)
   ;; default fonts
   (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
-  (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 120 :weight 'regular)
-  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 120 :weight 'regular)
+  (set-face-attribute 'fixed-pitch nil :family "Iosevka Slab" :height 120 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 120 :weight 'regular)
   :custom
   (line-spacing 0.2)
   ;; stop confirming the killing of processes
