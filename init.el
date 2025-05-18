@@ -603,6 +603,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :delight
   :init
   (projectile-mode +1)
+  (advice-add 'projectile-project-root :before-while 'optional-dir-remote-p)
   :custom
   (projectile-cache-file (expand-file-name "~/.cache/emacs/projectile.cache"))
   (projectile-known-projects-file
@@ -621,6 +622,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (:map projectile-mode-map
         ("s-p" . projectile-command-map)
         ("C-c p" . projectile-command-map)))
+
+(defun optional-dir-remote-p (&optional dir)
+  "Return t if DIR or `default-directory' is on a remote."
+  (not (file-remote-p (or dir default-directory))))
 
 (defun start-with-package-manager-prefix-p (string)
   "Return t if STRING start with locations where package managers store files."
