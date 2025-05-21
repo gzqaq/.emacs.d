@@ -615,8 +615,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (projectile-jj-command "jj file list --no-pager . | tr '\\n' '\\0'")
   ;; reduce the range for projectile to search for project root for faster tramp
   (projectile-project-root-functions '(projectile-root-local
-                                       projectile-root-bottom-up
-                                       projectile-root-marked))
+                                       projectile-root-marked
+                                       projectile-root-bottom-up))
   (projectile-project-root-files-bottom-up '(".jj" ".git"))
   :bind
   (:map projectile-mode-map
