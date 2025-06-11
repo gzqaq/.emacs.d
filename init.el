@@ -540,6 +540,11 @@
                                 vc-ignore-dir-regexp
                                 tramp-file-name-regexp)))
 
+;; smart dash, becomes _ automatically
+(use-package smart-dash
+  :ensure (:host github :repo "malsyned/smart-dash")
+  :hook (python-base-mode . smart-dash-mode))
+
 ;; docker
 (use-package docker
   :ensure t
