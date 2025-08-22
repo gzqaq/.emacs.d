@@ -777,22 +777,101 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :config
   ;; remove guess indent message
   (setq python-indent-guess-indent-offset-verbose nil)
-  (setq python-indent-offset 4))
-
-;; use pet to correctly set up venv
-(defun setup-python-venv ()
-  "Setup correct python executable and env."
-  (setq-local python-shell-interpreter (pet-executable-find "ipython")
-              python-shell-interpreter-args "-i --simple-prompt"
-              python-shell-virtualenv-root (pet-virtualenv-root)
-              python-shell-extra-pythonpaths (list (pet-project-root)))
-  (eglot-ensure))
-
-(use-package pet
-  :ensure t
+  (setq python-indent-offset 4)
   :hook
-  (python-base-mode . setup-python-venv)
-  (python-base-mode . pet-mode))
+  (python-base-mode . eglot-ensure))
+
+;; manually set venv
+(defun zq/setup-python-project ()
+  "Interactively create a .dir-locals.el file for the current Python project."
+  (interactive)
+  (let* ((project-root (or (locate-dominating-file default-directory "pyproject.toml")
+                           (locate-dominating-file default-directory ".jj")
+                           (locate-dominating-file default-directory ".git")
+                           (read-directory-name "Enter project root: ")))
+         (dir-locals-file (concat (file-name-as-directory project-root) ".dir-locals.el")))
+
+    (when (or (not (file-exists-p dir-locals-file))
+              (y-or-n-p (format "File %s already exists.  Overwrite it? " dir-locals-file)))
+
+      (let* (;; Use read-directory-name for venv path with completion
+             (venv-root (condition-case nil
+                            (read-directory-name "Enter virtualenv path (C-g for global):" project-root)
+                          (quit nil)))
+             (venv-root (if venv-root (expand-file-name venv-root) nil))
+             ;; Use read-file-name for python executable with completion
+             (base-python (if venv-root
+                              (concat venv-root "bin/python")
+                            (read-file-name "Enter global Python executable path: " nil nil t)))
+             (env-bin-dir (file-name-directory base-python))
+             (user-bin-dir (expand-file-name "~/.local/bin/"))
+
+             ;; Helper to find an executable or return "nil" for the template
+             (find-exec (lambda (name)
+                          (let ((env-path (concat env-bin-dir name))
+                                (user-path (concat user-bin-dir name)))
+                            (cond ((and env-path (file-exists-p env-path)) (format "\"%s\"" env-path))
+                                  ((and user-path (file-exists-p user-path)) (format "\"%s\"" user-path))
+                                  (t "nil")))))
+             ;; Helper for the pylsp command itself
+             (pylsp-cmd (let ((path (concat user-bin-dir "pylsp")))
+                          (if (and path (file-exists-p path)) path "pylsp")))
+
+             ;; Generate content
+             (content
+              (format
+               "((python-mode
+  . ((eval . (with-eval-after-load 'eglot
+               (progn
+                 ;; Safely modify eglot-server-programs for the local buffer
+                 (setq-local eglot-server-programs (copy-alist eglot-server-programs))
+                 (assq-delete-all 'python-mode eglot-server-programs)
+                 (add-to-list 'eglot-server-programs
+                              '(python-mode . (\"%s\" :initializationOptions
+                                               (:pylsp
+                                                (:plugins
+                                                 ( :jedi (:environment %s)
+                                                   :ruff (:executable %s)
+                                                   :pylsp_mypy (:overrides [\"--python-executable\"
+                                                                            \"%s\"
+                                                                            t])
+                                                   :flake8 (:executable %s)
+                                                   :pylint (:executable %s))))))))))
+
+     (python-shell-interpreter . %s)
+     (python-shell-virtualenv-root . %s)
+
+     (flycheck-python-pylint-executable . %s)
+     (flycheck-python-mypy-executable . %s)
+     (flycheck-python-mypy-python-executable . \"%s\")
+     (flycheck-python-ruff-executable . %s)
+
+     (dap-python-executable . \"%s\")
+
+     (python-black-command . %s)
+     (python-isort-command . %s)
+     (ruff-format-command . %s))))"
+               ;; Values for format string
+               pylsp-cmd
+               (if venv-root (format "\"%s\"" venv-root) "nil") ; for jedi
+               (funcall find-exec "ruff")
+               base-python
+               (funcall find-exec "flake8")
+               (funcall find-exec "pylint")
+               (funcall find-exec "ipython")
+               (if venv-root (format "\"%s\"" venv-root) "nil") ; for shell
+               (funcall find-exec "pylint")
+               (funcall find-exec "mypy")
+               base-python
+               (funcall find-exec "ruff")
+               base-python
+               (funcall find-exec "black")
+               (funcall find-exec "isort")
+               (funcall find-exec "ruff"))))
+
+        (with-temp-file dir-locals-file
+          (insert content))
+        (message "Created %s" dir-locals-file)))))
 
 ;; python in org
 (use-package ob-python
