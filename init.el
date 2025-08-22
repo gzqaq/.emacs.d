@@ -1309,19 +1309,9 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    ("C-c z m m" . mpv-media)))
 
 
+;; custom file
+(load "~/.config/emacs-custom.el")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 ;; Local Variables:
 ;; no-byte-compile: t
 ;; no-native-compile: t
