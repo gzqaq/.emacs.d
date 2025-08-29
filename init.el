@@ -78,18 +78,8 @@
   (set-default-coding-systems 'utf-8-unix)
   ;; precision scrolling
   (pixel-scroll-precision-mode 1)
-  ;; no need to have an elisp buffer when starting up
-  (setq initial-major-mode 'fundamental-mode)
-  ;; line-stype cursor
-  (setq-default cursor-type 'bar)
-  ;; welcome message in *scratch*
-  (setq initial-scratch-message nil)
   ;; make the window title the buffer name
   (setq-default frame-title-format '("%b"))
-  ;; set fill column to 100 rather than 70 in all cases
-  (setq-default fill-column 100)
-  ;; disable startup screen
-  (setq inhibit-startup-screen t)
   ;; visually indicates pair of matching parentheses
   (show-paren-mode t)
   ;; delete selection when start typing
@@ -97,18 +87,38 @@
   ;; increase the amount of data which emacs read from processes
   (setq read-process-output-max (* 1024 1024))
   :config
-  ;; no ringing
-  (setq ring-bell-function #'ignore)
   ;; default fonts
   (set-face-attribute 'default nil :family "SF Mono" :height 120 :weight 'regular)
   (set-face-attribute 'fixed-pitch nil :family "Iosevka Slab" :height 120 :weight 'regular)
   (set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 120 :weight 'regular)
   :custom
+  ;; disable startup screen
+  (inhibit-startup-screen t)
+  ;; no need to have an elisp buffer when starting up
+  (initial-major-mode 'fundamental-mode)
+  ;; welcome message in *scratch*
+  (initial-scratch-message nil)
+  ;; line-stype cursor
+  (cursor-type 'bar)
+  ;; no ringing
+  (ring-bell-function #'ignore)
+  ;; set fill column to 100 rather than 70 in all cases
+  (fill-column 100)
+  ;; never use tabs for indentation
+  (indent-tabs-mode nil)
+  ;; a littler looser layout
   (line-spacing 0.2)
   ;; stop confirming the killing of processes
   (confirm-kill-processes nil)
   ;; short answers (y/n/p)
   (use-short-answers t)
+  ;; backup in the same location
+  (backup-directory-alist '(("." . "/tmp/emacs-backup")))
+  (backup-by-copying t)
+  (version-control t)
+  (delete-old-versions t)
+  (kept-new-versions 7)
+  (kept-old-versions 3)
   :hook
   ;; show the fill column when programming
   (prog-mode . display-fill-column-indicator-mode))
@@ -126,14 +136,6 @@
   :hook
   ((prog-mode . electric-pair-local-mode)
    (text-mode . elec-pair-local-text-mode)))
-
-;; backup in the same location
-(setq backup-directory-alist '(("." . "/tmp/emacs-backup"))
-      backup-by-copying t
-      version-control t
-      delete-old-versions t
-      kept-new-versions 7
-      kept-old-versions 3)
 
 
 
@@ -154,9 +156,6 @@
 ;; column and line number
 (column-number-mode)
 (global-display-line-numbers-mode t)
-
-;; never use tabs for indentation
-(setq-default indent-tabs-mode nil)
 
 ;; highlights the cursor when it takes a large leap
 (use-package beacon
