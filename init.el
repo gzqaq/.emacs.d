@@ -289,6 +289,12 @@
   :init
   (vertico-mode))
 
+(use-package vertico-directory
+  :ensure nil
+  :after vertico
+  :bind (:map vertico-map
+              ("M-DEL" . vertico-directory-delete-word)))
+
 ;; adds marginalia to the minibuffer completions
 (use-package marginalia
   :ensure t
