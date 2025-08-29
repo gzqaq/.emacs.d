@@ -736,9 +736,11 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   (eldoc-echo-area-use-multiline-p t)
   (eglot-autoshutdown t)
+  (eglot-send-changes-idle-time 0.1)
   :hook
   ((rust-mode c-mode c++-mode) . eglot-ensure)
   :config
+  (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event
   ;; pylsp config
   (setq-default eglot-workspace-configuration
                 '(:pylsp (:plugins ( :black (:enabled :json-false)
