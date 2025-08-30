@@ -679,45 +679,25 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (c++-mode . check-with-c++17-std))
 
 ;; parse
-(use-package tree-sitter
-  :ensure t
-  :defer t
-  :delight " tree")
-
-(use-package tree-sitter-langs
-  :ensure t
-  :defer t)
-
 (use-package treesit
   :ensure nil
-  :commands
-  (treesit-install-language-grammar nf/treesit-install-all-languages)
   :init
   (setq treesit-language-source-alist
-        '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
-          (c . ("https://github.com/tree-sitter/tree-sitter-c"))
+        '((bash . ("https://github.com/tree-sitter/tree-sitter-bash" "v0.23.3"))
+          (c . ("https://github.com/tree-sitter/tree-sitter-c" "v0.23.3"))
           (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (cmake . ("https://github.com/uyha/tree-sitter-cmake"))
           (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
           (json . ("https://github.com/tree-sitter/tree-sitter-json"))
           (make . ("https://github.com/alemuller/tree-sitter-make"))
           (python . ("https://github.com/tree-sitter/tree-sitter-python"))
-          (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
-          (rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
+          ;; (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
+          (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.23.3"))
           (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))))
   (dolist (mapping '((python-mode . python-ts-mode)
                      (sh-mode . bash-ts-mode)
                      (rust-mode . rust-ts-mode)))
-    (add-to-list 'major-mode-remap-alist mapping))
-  :config
-  (defun nf/treesit-install-all-languages ()
-    "Install all languages specified by `treesit-language-source-alist'."
-    (interactive)
-    (let ((languages (mapcar 'car treesit-language-source-alist)))
-      (dolist (lang languages)
-        (treesit-install-language-grammar lang)
-        (message "`%s' parser was installed." lang)
-        (sit-for 0.75)))))
+    (add-to-list 'major-mode-remap-alist mapping)))
 
 (use-package combobulate
   :ensure (:host github :repo "mickeynp/combobulate"
