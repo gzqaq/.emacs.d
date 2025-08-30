@@ -12,4 +12,7 @@ recentf
 transient
 
 # cache
+auto-save-list/
+tramp
+tree-sitter
 ellama-sessions
