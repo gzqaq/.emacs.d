@@ -219,6 +219,23 @@
                            (t . (1.1))))
   :bind ([f5] . modus-themes-toggle))
 
+;; indentation guide bars
+(use-package indent-bars
+  :ensure t
+  :custom
+  (indent-bars-no-descend-lists t)  ; no extra bars in continued func arg lists
+  (indent-bars-treesit-support t)
+  (indent-bars-treesit-ignore-blank-lines-types '("module"))
+  ;; scope focus for python
+  (indent-bars-treesit-scope '((python function_definition class_definition for_statement
+                                       if_statement with_statement while_statement)))
+  :hook ((python-ts-mode yaml-mode) . indent-bars-mode))
+
+(defun zq/org-simple-python-mode ()
+  "Inhibit hooks from running for `org' src blocks for Python."
+  (if (string-prefix-p " *org-src-fontification:" (buffer-name))
+      (delay-mode-hooks (python-mode))
+    (python-mode)))
 
 
 ;;;========================
