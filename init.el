@@ -201,7 +201,7 @@
   :ensure t
   :demand t  ;; load immediately
   :config
-  (load-theme 'modus-operandi :no-confirm)
+  (load-theme 'modus-operandi-tinted :no-confirm)
   :custom
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
@@ -217,6 +217,7 @@
                            (2 . (variable-pitch 1.3))
                            (3 . (variable-pitch 1.2))
                            (t . (1.1))))
+  (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
   :bind ([f5] . modus-themes-toggle))
 
 ;; indentation guide bars
