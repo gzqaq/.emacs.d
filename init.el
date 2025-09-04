@@ -1155,7 +1155,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :delight "-Ω-"
   :defines (org-roam-capture-templates org-roam-mode-map)
   :custom
-  (org-roam-directory (file-truename (expand-file-name "~/OneDrive/org-roam")))
+  (org-roam-directory (file-truename (expand-file-name "~/org-files/org-roam")))
   (org-roam-db-location (expand-file-name "~/.cache/emacs/org-roam.db"))
   :config
   (setq org-roam-capture-templates
@@ -1228,7 +1228,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (citar-library-paths
    (list (expand-file-name "~/OneDrive/zotero-attachments/")))
   (citar-notes-paths
-   (list (expand-file-name "~/OneDrive/org-roam/literature/")))
+   (list (expand-file-name "~/org-files/org-roam/literature/")))
   :hook
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup))
