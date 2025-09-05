@@ -331,6 +331,7 @@ respect these settings."
 (add-hook 'after-make-frame-functions #'zq/frame-setup)
 (add-hook 'elpaca-after-init-hook #'zq/frames-setup)
 
+
 ;;;========================
 ;;; minibuffer completion
 ;;;========================
