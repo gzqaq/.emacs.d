@@ -145,13 +145,21 @@
 
 
 ;; fonts
-(defun zq/set-fonts ()
-  "Set default fonts.  Since daemon-mode doesn't respect these settings, manually set them."
-  (interactive)
-  (set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
-  (set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
-  (set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
-  (message "Set fonts for 'han 'cjk-misc and 'devanagari. Done!"))
+(defun zq/fonts-setup (frame)
+  "Apply font settings for FRAME.
+To be used with `after-make-frame-functions' because daemon mode doesn't
+respect these settings."
+  (with-selected-frame frame
+    (when (display-graphic-p frame)
+      ;; GUI frame setup
+      (progn
+        ;; Set fonts
+        (set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
+        (set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
+        (set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
+        (message "Applied GUI-specific font settings.")))))
+
+(add-hook 'after-make-frame-functions #'zq/fonts-setup)
 
 ;; column and line number
 (column-number-mode)
@@ -297,20 +305,31 @@
 
 ;; make corfu popup come up in terminal overlay
 (use-package corfu-terminal
-  :if (not (display-graphic-p))
-  :ensure t
-  :config
-  (corfu-terminal-mode))
+  :ensure t)
 
 ;; pretty icons for corfu
 (use-package kind-icon
-  :if (display-graphic-p)
   :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  :after corfu)
 
+;; corfu-terminal for non-gui frames and kind-icon for gui frames
+(defun zq/frame-setup (frame)
+  "Apply frame-specific corfu settings for FRAME."
+  (with-selected-frame frame
+    (if (not (display-graphic-p frame))
+        ;; Terminal frame setup
+        (corfu-terminal-mode)
+      ;; GUI frame setup
+      (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+      (corfu-terminal-mode -1))))
 
+(defun zq/frames-setup ()
+  "Apply frame-specific corfu settings for existing frames."
+  (dolist (frame (frame-list))
+    (zq/frame-setup frame)))
+
+(add-hook 'after-make-frame-functions #'zq/frame-setup)
+(add-hook 'elpaca-after-init-hook #'zq/frames-setup)
 
 ;;;========================
 ;;; minibuffer completion
