@@ -308,6 +308,8 @@ respect these settings."
   :ensure t)
 
 ;; pretty icons for corfu
+;; Unusually large icons on HiDPI Ubuntu:
+;; https://github.com/jdtsmith/kind-icon/issues/46#issuecomment-2954493820
 (use-package kind-icon
   :ensure t
   :after corfu)
@@ -330,6 +332,7 @@ respect these settings."
 
 (add-hook 'after-make-frame-functions #'zq/frame-setup)
 (add-hook 'elpaca-after-init-hook #'zq/frames-setup)
+
 
 ;;;========================
 ;;; minibuffer completion
