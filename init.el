@@ -757,27 +757,29 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :hook
   ((rust-mode c-mode c++-mode) . eglot-ensure)
   :config
-  (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event
+  ; (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event
   ;; pylsp config
   (setq-default eglot-workspace-configuration
-                '(:pylsp (:plugins ( :black (:enabled :json-false)
-                                     :autopep8 (:enabled :json-false)
-                                     :yapf ( :enabled :json-false)
-                                     :ruff ( :enabled t
-                                             :formatEnabled t
-                                             :lineLength 100)
-                                     :jedi_completion
-                                     ( :enabled t
-                                       :include_params t
-                                       :include_class_objects t
-                                       :include_function_objects t
-                                       :fuzzy t
-                                       :eager t
-                                       :cache_for ["matplotlib" "numpy" "torch" "jax" "flax"])
-                                     :rope_autoimport ( :enabled :json-false)
-                                     ;; :pylsp_mypy ( :live_mode :json-false :dmypy t)
-                                     :flake8 (:enabled :json-false)
-                                     :pycodestyle (:enabled :json-false)))))
+                '(:pylsp
+                  ( :signature (:formatter "ruff")
+                    :plugins ( :black (:enabled :json-false)
+                               :autopep8 (:enabled :json-false)
+                               :yapf ( :enabled :json-false)
+                               :ruff ( :enabled t
+                                       :formatEnabled t
+                                       :lineLength 100)
+                               :jedi_completion
+                               ( :enabled t
+                                 :include_params t
+                                 :include_class_objects t
+                                 :include_function_objects t
+                                 :fuzzy t
+                                 :eager t
+                                 :cache_for ["matplotlib" "numpy" "torch" "jax" "flax"])
+                               :rope_autoimport ( :enabled :json-false)
+                               ;; :pylsp_mypy ( :live_mode :json-false :dmypy t)
+                               :flake8 (:enabled :json-false)
+                               :pycodestyle (:enabled :json-false)))))
   ;; rust
   (add-to-list 'eglot-server-programs
                `(rust-mode . ("rust-analyzer" :initializationOptions
