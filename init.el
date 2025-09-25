@@ -699,21 +699,11 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (setq wakatime-cli-path (expand-file-name "~/.wakatime/wakatime-cli")))
 
 ;; syntax check
-(defun check-with-c++17-std ()
-  "Make flycheck use c++17 std."
-  (setq-local flycheck-clang-language-standard "c++17"))
-
-(use-package flycheck
-  :ensure t
-  :defer t
+(use-package flymake
+  :ensure nil
   :delight
-  :custom
-  ;; check on save instead of running constantly
-  (flycheck-check-syntax-automatically '(mode-enabled save))
-  (flycheck-disabled-checkers '(python-mypy))  ;; pylsp already has mypy plugin
   :hook
-  ((prog-mode text-mode) . flycheck-mode)
-  (c++-mode . check-with-c++17-std))
+  ((prog-mode text-mode) . flymake-mode))
 
 ;; parse
 (use-package treesit
@@ -757,29 +747,12 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :hook
   ((rust-mode c-mode c++-mode) . eglot-ensure)
   :config
-  ; (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event
-  ;; pylsp config
-  (setq-default eglot-workspace-configuration
-                '(:pylsp
-                  ( :signature (:formatter "ruff")
-                    :plugins ( :black (:enabled :json-false)
-                               :autopep8 (:enabled :json-false)
-                               :yapf ( :enabled :json-false)
-                               :ruff ( :enabled t
-                                       :formatEnabled t
-                                       :lineLength 100)
-                               :jedi_completion
-                               ( :enabled t
-                                 :include_params t
-                                 :include_class_objects t
-                                 :include_function_objects t
-                                 :fuzzy t
-                                 :eager t
-                                 :cache_for ["matplotlib" "numpy" "torch" "jax" "flax"])
-                               :rope_autoimport ( :enabled :json-false)
-                               ;; :pylsp_mypy ( :live_mode :json-false :dmypy t)
-                               :flake8 (:enabled :json-false)
-                               :pycodestyle (:enabled :json-false)))))
+  (setq eglot-server-programs
+        (cl-remove-if (lambda (item) (or (equal (car item) '(python-mode python-ts-mode))
+                                         (equal (car item) '(rust-ts-mode rust-mode))))
+                      eglot-server-programs))
+  (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
+  (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event
   ;; rust
   (add-to-list 'eglot-server-programs
                `(rust-mode . ("rust-analyzer" :initializationOptions
@@ -789,8 +762,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :bind
   (("C-c l c" . eglot-reconnect)
    ("C-c l d" . flymake-show-buffer-diagnostics)
-   ("C-c l f f" . eglot-format)
-   ("C-c l f b" . eglot-format-buffer)
    ("C-c l l" . eglot)
    ("C-c l r n" . eglot-rename)
    ("C-c l s" . eglot-shutdown)))
@@ -818,6 +789,26 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :hook
   (python-base-mode . eglot-ensure))
 
+(use-package flymake-ruff
+  :ensure (:type git :host github :repo "erickgnavar/flymake-ruff")
+  :hook (eglot-managed-mode . flymake-ruff-load))
+
+(use-package reformatter
+  :ensure t
+  :config
+  (reformatter-define ruff-format
+    :program "ruff"
+    :args (list "format" "--line-length" "100" "--stdin-filename"
+                (or (buffer-file-name) input-file))
+    :lighter " RuffFmt")
+  (reformatter-define ruff-isort
+    :program "ruff"
+    :args (list "check" "--select" "I" "--fix" "--stdin-filename"
+                (or (buffer-file-name) input-file)))
+  :hook
+  (python-base-mode . ruff-format-on-save-mode)
+  (python-base-mode . ruff-isort-on-save-mode))
+
 ;; manually set venv
 (defun zq/setup-python-project ()
   "Interactively create a .dir-locals.el file for the current Python project."
@@ -826,11 +817,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                            (locate-dominating-file default-directory ".jj")
                            (locate-dominating-file default-directory ".git")
                            (read-directory-name "Enter project root: ")))
-         (dir-locals-file (concat (file-name-as-directory project-root) ".dir-locals.el")))
-
+         (dir-locals-file (concat (file-name-as-directory project-root) ".dir-locals.el"))
+         (pyright-config-file (concat (file-name-as-directory project-root) "pyrightconfig.json")))
     (when (or (not (file-exists-p dir-locals-file))
               (y-or-n-p (format "File %s already exists.  Overwrite it? " dir-locals-file)))
-
       (let* (;; Use read-directory-name for venv path with completion
              (venv-root (condition-case nil
                             (read-directory-name "Enter virtualenv path (C-g for global):" project-root)
@@ -850,65 +840,23 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                             (cond ((and env-path (file-exists-p env-path)) (format "\"%s\"" env-path))
                                   ((and user-path (file-exists-p user-path)) (format "\"%s\"" user-path))
                                   (t "nil")))))
-             ;; Helper for the pylsp command itself
-             (pylsp-cmd (let ((path (concat user-bin-dir "pylsp")))
-                          (if (and path (file-exists-p path)) path "pylsp")))
 
              ;; Generate content
              (content
               (format
                "((python-mode
-  . ((eval . (with-eval-after-load 'eglot
-               (progn
-                 ;; Safely modify eglot-server-programs for the local buffer
-                 (setq-local eglot-server-programs (copy-alist eglot-server-programs))
-                 (assq-delete-all 'python-mode eglot-server-programs)
-                 (add-to-list 'eglot-server-programs
-                              '(python-mode . (\"%s\" :initializationOptions
-                                               (:pylsp
-                                                (:plugins
-                                                 ( :jedi (:environment %s)
-                                                   :ruff (:executable %s)
-                                                   :pylsp_mypy (:overrides [\"--python-executable\"
-                                                                            \"%s\"
-                                                                            t])
-                                                   :flake8 (:executable %s)
-                                                   :pylint (:executable %s))))))))))
-
-     (python-shell-interpreter . %s)
+  . ((python-shell-interpreter . %s)
      (python-shell-virtualenv-root . %s)
-
-     (flycheck-python-pylint-executable . %s)
-     (flycheck-python-mypy-executable . %s)
-     (flycheck-python-mypy-python-executable . \"%s\")
-     (flycheck-python-ruff-executable . %s)
-
-     (dap-python-executable . \"%s\")
-
-     (python-black-command . %s)
-     (python-isort-command . %s)
-     (ruff-format-command . %s))))"
+     (dap-python-executable . \"%s\"))))"
                ;; Values for format string
-               pylsp-cmd
-               (if venv-root (format "\"%s\"" venv-root) "nil") ; for jedi
-               (funcall find-exec "ruff")
-               base-python
-               (funcall find-exec "flake8")
-               (funcall find-exec "pylint")
                (funcall find-exec "ipython")
                (if venv-root (format "\"%s\"" venv-root) "nil") ; for shell
-               (funcall find-exec "pylint")
-               (funcall find-exec "mypy")
-               base-python
-               (funcall find-exec "ruff")
-               base-python
-               (funcall find-exec "black")
-               (funcall find-exec "isort")
-               (funcall find-exec "ruff"))))
-
+               base-python)))
         (with-temp-file dir-locals-file
           (insert content))
-        (message "Created %s" dir-locals-file)))))
+        (with-temp-file pyright-config-file
+          (insert "{\"exclude\":[\".venv\"],\"venvPath\":\".\",\"venv\":\".venv\"}"))
+        (message "Created %s and %s" dir-locals-file pyright-config-file)))))
 
 ;; python in org
 (use-package ob-python
