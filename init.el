@@ -1285,6 +1285,24 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 ;;;========================
 
 
+;; 中文输入法
+(use-package pyim
+  :ensure t
+  :custom
+  (default-input-method "pyim")
+  :config
+  (pyim-default-scheme 'wubi)
+  :bind
+  ("M-SPC" . toggle-input-method))
+
+;; 五笔词库
+(use-package pyim-wbdict
+  :ensure t
+  :config
+  ;; (pyim-wbdict-v86-enable) ;; 86版五笔
+  (pyim-wbdict-v86-single-enable)  ;; 86版单字词库，以尽可能不重码减少选词需要为目的
+  )
+
 ;; RSS feed reader
 (use-package elfeed
   :ensure t
