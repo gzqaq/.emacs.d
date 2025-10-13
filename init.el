@@ -88,7 +88,7 @@
   (setq read-process-output-max (* 1024 1024))
   :config
   ;; default fonts
-  (set-face-attribute 'default nil :family "SF Mono" :height 100 :weight 'regular)
+  (set-face-attribute 'default nil :family "IBM Plex Mono" :height 100 :weight 'regular)
   (set-face-attribute 'fixed-pitch nil :family "Iosevka Slab" :height 100 :weight 'regular)
   (set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 100 :weight 'regular)
   :custom
@@ -211,7 +211,6 @@ respect these settings."
   :config
   (load-theme 'modus-operandi-tinted :no-confirm)
   :custom
-  (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
   (modus-themes-mixed-fonts t)
   (modus-themes-variable-pitch-ui nil)
