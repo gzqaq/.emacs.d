@@ -180,7 +180,7 @@ respect these settings."
         ;; Set fonts
         (set-fontset-font t 'han (font-spec :family "PingFang SC"))
         (set-fontset-font t 'cjk-misc (font-spec :family "PingFang SC"))
-        (set-fontset-font t 'devanagari (font-spec :family "Lava Devanagari"))
+        (set-fontset-font t 'devanagari (font-spec :family "Tiro Devanagari Sanskrit"))
         (message "Applied GUI-specific font settings.")))))
 
 (add-hook 'after-make-frame-functions #'zq/fonts-setup)
