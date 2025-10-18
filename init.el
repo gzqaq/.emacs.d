@@ -1275,6 +1275,11 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    ("C-c z m u" . mpv-url)
    ("C-c z m m" . mpv-media)))
 
+(use-package hk2dn
+  :ensure nil
+  :load-path "lisp"
+  :bind (("C-c z h" . hk-to-devanagari-region)))
+
 
 ;; custom file
 (load "~/.config/emacs-custom.el")
