@@ -156,7 +156,7 @@ respect these settings."
         ;; Set fonts
         (set-fontset-font "fontset-default" 'han "Noto Sans CJK SC")
         (set-fontset-font "fontset-default" 'cjk-misc "Noto Sans CJK SC")
-        (set-fontset-font "fontset-default" 'devanagari "Noto Sans Devanagari")
+        (set-fontset-font "fontset-default" 'devanagari "Tiro Devanagari Sanskrit")
         (message "Applied GUI-specific font settings.")))))
 
 (add-hook 'after-make-frame-functions #'zq/fonts-setup)
