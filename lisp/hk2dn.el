@@ -31,6 +31,15 @@ The conversion logic follows standard Sanskrit transliteration rules."
   (interactive "r")
   (call-process-region beg end hk2dn-cli-executable t t t))
 
+;;;###autoload
+(defun hk-to-devanagari-word-at-point ()
+  "Convert the symbol at point from Harvard-Kyoto to Devanagari."
+  (interactive)
+  (let ((bounds (bounds-of-thing-at-point 'symbol)))
+    (if (not bounds)
+        (message "No symbol at point to be transliterated.")
+      (hk-to-devanagari-region (car bounds) (cdr bounds)))))
+
 
 (provide 'hk2dn)
 
