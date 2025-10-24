@@ -800,11 +800,13 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
     :program "ruff"
     :args (list "format" "--line-length" "100" "--stdin-filename"
                 (or (buffer-file-name) input-file))
-    :lighter " RuffFmt")
+    :lighter " RuffFmt"
+    :working-directory '(projectile-project-root))
   (reformatter-define ruff-isort
     :program "ruff"
     :args (list "check" "--select" "I" "--fix" "--stdin-filename"
-                (or (buffer-file-name) input-file)))
+                (or (buffer-file-name) input-file))
+    :working-directory '(projectile-project-root))
   :hook
   (python-base-mode . ruff-format-on-save-mode)
   (python-base-mode . ruff-isort-on-save-mode))
