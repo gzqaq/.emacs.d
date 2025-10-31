@@ -932,6 +932,17 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 (use-package xenops
   :ensure t
   :delight
+  :config
+  (add-to-list 'xenops-math-latex-process-alist
+               '(luasvgm :programs ("lualatex" "dvisvgm")
+                         :description "dvi > svg"
+                         :message "you need to install the programs: lualatex and dvisvgm."
+                         :image-input-type "dvi"
+                         :image-output-type "svg"
+                         :image-size-adjust (1.7 . 1.5)
+                         :latex-compiler
+                         ("lualatex --interaction-mode=nonstopmode --shell-escape --output-format=dvi --output-directory=%o %f")
+                         :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
   :hook
   (LaTeX-mode . xenops-mode))
 
