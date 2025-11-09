@@ -1290,7 +1290,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   (default-input-method "pyim")
   :config
-  (pyim-default-scheme 'wubi)
+  (pyim-default-scheme 'cangjie)
   :bind
   ("M-SPC" . toggle-input-method))
 
@@ -1301,6 +1301,12 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   ;; (pyim-wbdict-v86-enable) ;; 86版五笔
   (pyim-wbdict-v86-single-enable)  ;; 86版单字词库，以尽可能不重码减少选词需要为目的
   )
+
+;; 倉頡五代
+(use-package pyim-cangjiedict
+  :ensure t
+  :config
+  (pyim-cangjie5dict-enable))
 
 ;; RSS feed reader
 (use-package elfeed
