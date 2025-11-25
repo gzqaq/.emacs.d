@@ -1290,9 +1290,15 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   (default-input-method "pyim")
   :config
-  (pyim-default-scheme 'cangjie)
+  (pyim-default-scheme 'quanpin)
   :bind
   ("M-SPC" . toggle-input-method))
+
+;; 拼音词库
+(use-package pyim-basedict
+  :ensure t
+  :config
+  (pyim-basedict-enable))
 
 ;; 五笔词库
 (use-package pyim-wbdict
