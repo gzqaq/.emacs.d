@@ -302,10 +302,6 @@ respect these settings."
   :config
   (corfu-popupinfo-mode))
 
-;; make corfu popup come up in terminal overlay
-(use-package corfu-terminal
-  :ensure t)
-
 ;; pretty icons for corfu
 ;; Unusually large icons on HiDPI Ubuntu:
 ;; https://github.com/jdtsmith/kind-icon/issues/46#issuecomment-2954493820
@@ -319,10 +315,9 @@ respect these settings."
   (with-selected-frame frame
     (if (not (display-graphic-p frame))
         ;; Terminal frame setup
-        (corfu-terminal-mode)
+        (message "No setup for terminal frame.")
       ;; GUI frame setup
-      (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
-      (corfu-terminal-mode -1))))
+      (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))))
 
 (defun zq/frames-setup ()
   "Apply frame-specific corfu settings for existing frames."
