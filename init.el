@@ -577,6 +577,9 @@ respect these settings."
   :custom
   (ellama-language "Chinese"))
 
+(use-package rg
+  :ensure t)
+
 
 
 ;;;========================
