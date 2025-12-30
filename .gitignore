@@ -10,6 +10,7 @@ eshell
 racket-mode
 recentf
 transient
+ielm-history.eld
 
 # cache
 auto-save-list/

@@ -560,20 +560,19 @@ respect these settings."
   (add-hook 'elpaca-after-init-hook
             (lambda () (global-whitespace-cleanup-mode t))))
 
+(defcustom zq/gemini-api-key nil
+  "API key for Google Gemini."
+  :type 'string
+  :group 'ellama)
+
 (use-package ellama
   :ensure t
   :bind ("C-c z l" . ellama-transient-main-menu)
   :init
-  (require 'llm-ollama)
-  (setopt ellama-provider (make-llm-ollama :chat-model "llama3.1:8b"))
-  (setopt ellama-coding-provider (make-llm-ollama :chat-model "qwen2.5-coder:7b"
-                                                  :embedding-model "nomic-embed-text"))
-  (setopt ellama-naming-provider (make-llm-ollama :chat-model "llama3.1:8b"
-                                                  :embedding-model "nomic-embed-text"))
-  (setopt ellama-summarization-provider (make-llm-ollama :chat-model "llama3.1:8b"
-                                                         :embedding-model "nomic-embed-text"))
-  (setopt ellama-translation-provider (make-llm-ollama :chat-model "qwen2.5:7b"
-                                                       :embedding-model "nomic-embed-text"))
+  (require 'llm-gemini)
+  :config
+  (setopt ellama-provider
+          (make-llm-gemini :key zq/gemini-api-key :chat-model "gemini-3-flash-preview"))
   :custom
   (ellama-language "Chinese"))
 
