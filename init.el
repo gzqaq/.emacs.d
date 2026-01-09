@@ -754,7 +754,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
                                          (equal (car item) '(rust-ts-mode rust-mode))))
                       eglot-server-programs))
   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
-  (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event
+  ; (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event
   ;; rust
   (add-to-list 'eglot-server-programs
                `(rust-mode . ("rust-analyzer" :initializationOptions
@@ -1288,7 +1288,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    ("C-c z c" . open-my-config)
    ("C-c z a" . open-my-agenda)
    ("C-c z m u" . mpv-url)
-   ("C-c z m m" . mpv-media)))
+   ("C-c z m m" . mpv-media)
+   :map org-mode-map
+   ("C-c z b" . zq/org-html-bold)
+   ("C-c z p" . zq/org-html-span)))
 
 (use-package hk2dn
   :ensure nil
