@@ -712,8 +712,8 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure nil
   :init
   (setq treesit-language-source-alist
-        '((bash . ("https://github.com/tree-sitter/tree-sitter-bash" "v0.23.3"))
-          (c . ("https://github.com/tree-sitter/tree-sitter-c" "v0.23.3"))
+        '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
+          (c . ("https://github.com/tree-sitter/tree-sitter-c"))
           (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (cmake . ("https://github.com/uyha/tree-sitter-cmake"))
           (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
@@ -721,7 +721,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
           (make . ("https://github.com/alemuller/tree-sitter-make"))
           (python . ("https://github.com/tree-sitter/tree-sitter-python"))
           ;; (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
-          (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.23.3"))
+          (rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
           (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))))
   (dolist (mapping '((python-mode . python-ts-mode)
                      (sh-mode . bash-ts-mode)
