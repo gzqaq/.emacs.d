@@ -7,8 +7,13 @@
 (defun delete-file-and-buffer ()
   "Delete current buffer and corresponding file."
   (interactive)
-  (delete-file (buffer-file-name))
-  (kill-buffer))
+  (let ((filename (buffer-file-name)))
+    (if (not filename)
+        (message "Current buffer is not visiting a file!")
+      (when (y-or-n-p (format "Are you sure you want to delete %s? " filename))
+        (delete-file filename)
+        (kill-buffer)
+        (message "File '%s' deleted." filename)))))
 
 (defun zq/org-html-bold ()
   "Emphasize with HTML's bold tag."
