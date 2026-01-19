@@ -978,7 +978,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :custom
   (reftex-plug-into-AUCTeX t)
   (reftex-default-bibliography
-   (list (expand-file-name "~/OneDrive/zot-references.bib")))
+   (list (expand-file-name "~/zotero.bib")))
   :hook
   (LaTeX-mode . turn-on-reftex))
 
@@ -1202,15 +1202,14 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure t
   :defer t
   :custom
-  (org-cite-global-bibliography
-   (list (expand-file-name "~/OneDrive/zot-references.bib")))
+  (org-cite-global-bibliography (list (expand-file-name "~/zotero.bib")))
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
   (citar-bibliography org-cite-global-bibliography)
   (citar-citeproc-csl-styles-dir (expand-file-name "~/Zotero/styles"))
   (citar-library-paths
-   (list (expand-file-name "~/OneDrive/zotero-attachments/")))
+   (list (expand-file-name "~/zotero-attachments/")))
   (citar-notes-paths
    (list (expand-file-name "~/org-files/org-roam/literature/")))
   :hook
