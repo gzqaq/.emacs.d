@@ -1093,8 +1093,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :config
   ;; open pdf with emacs
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
-  (setq org-agenda-files (list (expand-file-name
-                                "~/OneDrive/org-life/agenda.org")))
   :bind (("C-c a" . org-agenda)
          :map org-mode-map
          ("C-c M-L" . org-store-link)
@@ -1242,11 +1240,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
 
-(defun open-my-agenda ()
-  "Open agenda file."
-  (interactive)
-  (find-file (expand-file-name "~/OneDrive/org-life/agenda.org")))
-
 ;; use MPV to stream URL
 (defun mpv-url (url)
   "Use `mpv' to stream URL."
@@ -1285,7 +1278,6 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :bind
   (("C-c z d" . delete-file-and-buffer)
    ("C-c z c" . open-my-config)
-   ("C-c z a" . open-my-agenda)
    ("C-c z m u" . mpv-url)
    ("C-c z m m" . mpv-media)
    :map org-mode-map
