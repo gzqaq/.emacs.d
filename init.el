@@ -562,19 +562,18 @@ respect these settings."
 
 (defcustom zq/gemini-api-key nil
   "API key for Google Gemini."
-  :type 'string
-  :group 'ellama)
+  :type 'string)
 
-(use-package ellama
+(use-package gptel
   :ensure t
-  :bind ("C-c z l" . ellama-transient-main-menu)
-  :init
-  (require 'llm-gemini)
-  :config
-  (setopt ellama-provider
-          (make-llm-gemini :key zq/gemini-api-key :chat-model "gemini-3-flash-preview"))
   :custom
-  (ellama-language "Chinese"))
+  (gptel-model 'gemini-3-flash-preview)
+  :config
+  (setopt gptel-backend (gptel-make-gemini "Gemini" :key zq/gemini-api-key :stream t))
+  ;; Proxies should be set via `gptel-curl-extra-args' with "--proxy", because `gptel-proxy'
+  ;; introduces "--proxy-negotiate" and "--proxy-user" typical personal proxies don't support.
+  :bind
+  ("C-c z RET" . gptel-send))
 
 (use-package rg
   :ensure t)
