@@ -1208,7 +1208,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 
 ;; org to epub
 (use-package ox-epub
-  :ensure t
+  :ensure (:type git :host github :repo "bradmont/ox-epub")
   :after org)
 
 ;; org to markdown (github flavored)
