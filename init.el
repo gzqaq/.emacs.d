@@ -560,19 +560,51 @@ respect these settings."
   (add-hook 'elpaca-after-init-hook
             (lambda () (global-whitespace-cleanup-mode t))))
 
+;; gptel
 (defcustom zq/gemini-api-key nil
   "API key for Google Gemini."
   :type 'string)
 
+(defcustom zq/kimi-api-key nil
+  "API Key for Moonshot Kimi."
+  :type 'string)
+
 (use-package gptel
   :ensure t
+  :demand t
   :custom
   (gptel-model 'gemini-3-flash-preview)
   :config
   (setopt gptel-backend (gptel-make-gemini "Gemini" :key zq/gemini-api-key :stream t))
   ;; Proxies should be set via `gptel-curl-extra-args' with "--proxy", because `gptel-proxy'
   ;; introduces "--proxy-negotiate" and "--proxy-user" typical personal proxies don't support.
+  (gptel-make-preset 'gemini-pro
+    :description "Preset for Gemini 3 Pro"
+    :backend (gptel-make-gemini "Gemini" :key zq/gemini-api-key :stream t)
+    :model 'gemini-3-pro-preview
+    :tools nil)
+  ;; Preset for Kimi K2.5 (currently broken, just a placeholder)
+  (setq gptel-tools
+        (list (gptel-make-tool
+               :name "$web_search"
+               :function (lambda (&optional search_result)
+                           (json-serialize
+                            `(:search_result ,search_result)))
+               :description "Moonshot builtin web search. Only usable by moonshot model (kimi)."
+               :args '((:name "search_result" :type object :optional t))
+               :category "web")))
+  (gptel-make-preset 'kimi
+    :description "Preset for Kimi K2.5"
+    :backend (gptel-make-openai "Moonshot"
+               :host "api.moonshot.cn"
+               :key zq/kimi-api-key
+               :stream t
+               :models '(kimi-k2.5)
+               :request-params '(:tools [( :type "builtin_function"
+                                           :function (:name "$web_search"))]))
+    :model 'kimi-k2.5)
   :bind
+  ("C-c z g" . gptel)
   ("C-c z RET" . gptel-send))
 
 (use-package rg
