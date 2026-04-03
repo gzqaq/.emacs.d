@@ -1183,36 +1183,54 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure t
   :defer t
   :delight "-Ω-"
-  :defines (org-roam-capture-templates org-roam-mode-map)
   :custom
-  (org-roam-directory (file-truename (expand-file-name "~/org-files/org-roam")))
-  (org-roam-db-location (expand-file-name "~/.cache/emacs/org-roam.db"))
+  (org-roam-directory (expand-file-name "~/org-files/slipbox"))
+  (org-roam-db-location (expand-file-name "~/.cache/emacs/org-roam-slipbox.db"))
+  (org-roam-dailies-directory "daily/")
   :config
+  (require 'org-roam-dailies)
+
+  ;; Show directory/namespace in completion
+  (cl-defmethod org-roam-node-namespace ((node org-roam-node))
+    (file-relative-name (file-name-directory (directory-file-name (org-roam-node-file node)))
+                (expand-file-name "~/org-files")))
+  (setq org-roam-node-display-template
+        (concat "${title:*} "
+                (propertize "${namespace:16}" 'face 'shadow)
+                " "
+                (propertize "${tags:16}" 'face 'org-tag)))
+
+  ;; Main note types
   (setq org-roam-capture-templates
-        '(("d" "default" plain "%?"
-           :if-new (file+head "fleeting/%<%Y%m%d%H%M%S>-${slug}.org"
-                              "#+title: ${title}\n#+created: %U \n#+last_modified: %U\n\n")
+        '(("p" "permanent" plain "- claim :: %?\n- why it matters :: \n- links :: \n\n"
+           :target (file+head "notes/${slug}.org"
+                              "#+title: ${title}\n#+filetags: :permanent:\n#+created: %U\n#+last_modified: %U")
            :unnarrowed t)
-          ("c" "concept" plain "%?"
-           :if-new (file+head "concepts/${slug}.org"
-           "#+title: ${title}\n#+author: Ziqin Gong\n#+created: %U\n#+last_modified: %U\n\n")
+          ("l" "literature" plain "- source point :: %?\n- main claim :: \n- use later for :: \n\n"
+           :target (file+head "literature/${slug}.org"
+                              "#+title: ${title}\n#+filetags: :literature:\n#+created: %U\n#+last_modified: %U")
            :unnarrowed t)
-          ("l" "literature" plain "%?"
-           :if-new (file+head "literature/${slug}.org"
-           "#+title: ${title}\n#+author: Ziqin Gong\n#+created: %U\n#+last_modified: %U\n\n")
-           :unnarrowed t)
-          ("C" "collection" plain "%?"
-           :if-new (file+head "collections/${slug}.org"
-           "#+title: ${title}\n#+author: Ziqin Gong\n#+created: %U\n#+last_modified: %U\n\n")
+          ("s" "structure / project" plain "%?"
+           :target (file+head "projects/${slug}.org"
+                              "#+title: ${title}\n#+filetags: :project:\n#+created: %U\n#+last_modified: %U")
            :unnarrowed t)))
+
+  ;; Fleeting capture goes to daily notes, not permanent nodes
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry "* %?\nEntered on %U\n"
+           :target (file+head "%<%Y-%m-%d>.org"
+                              "#+title: %<%Y-%m-%d>\n#+filetags: :daily:"))))
   (org-roam-db-autosync-enable)
+
   :bind (("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
+         ("C-c n n" . org-roam-capture)
+         ("C-c n c" . org-roam-dailies-capture-today)
          :map org-mode-map
          ("C-c n l" . org-roam-buffer-toggle)
          ("C-c n r" . org-roam-ref-add-from-key)
          ("C-c n a" . org-roam-alias-add))
+
   :hook
   ;; enable last_modified
   (org-mode . update-last-modified-field))
@@ -1257,7 +1275,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (citar-library-paths
    (list (expand-file-name "~/zotero-attachments/")))
   (citar-notes-paths
-   (list (expand-file-name "~/org-files/org-roam/literature/")))
+   (list (expand-file-name "~/org-files/slipbox/literature/")))
   :hook
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup))
