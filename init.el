@@ -1261,6 +1261,52 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   :ensure t
   :after org)
 
+;; let mathjax recognize `\bm'
+(use-package ox-html
+  :ensure nil
+  :after org
+  :custom
+  (org-html-mathjax-template
+   "<script>
+  window.MathJax = {
+    loader: {
+      load: ['[tex]/boldsymbol']
+    },
+    tex: {
+      packages: {'[+]': ['boldsymbol']},
+      macros: {
+        bm: ['\\\\boldsymbol{#1}', 1]
+      },
+      ams: {
+        multlineWidth: '%MULTLINEWIDTH'
+      },
+      tags: '%TAGS',
+      tagSide: '%TAGSIDE',
+      tagIndent: '%TAGINDENT'
+    },
+    chtml: {
+      scale: %SCALE,
+      displayAlign: '%ALIGN',
+      displayIndent: '%INDENT'
+    },
+    svg: {
+      scale: %SCALE,
+      displayAlign: '%ALIGN',
+      displayIndent: '%INDENT'
+    },
+    output: {
+      font: '%FONT',
+      displayOverflow: '%OVERFLOW'
+    }
+  };
+</script>
+
+<script
+  id=\"MathJax-script\"
+  async
+  src=\"%PATH\">
+</script>"))
+
 ;; citation
 (use-package citar
   :ensure t
@@ -1347,8 +1393,7 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
    ("C-c z m u" . mpv-url)
    ("C-c z m m" . mpv-media)
    :map org-mode-map
-   ("C-c z b" . zq/org-html-bold)
-   ("C-c z p" . zq/org-html-span)))
+   ("C-c z b" . zq/org-add-bigblow-setupfile)))
 
 (use-package hk2dn
   :ensure nil
