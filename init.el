@@ -1136,6 +1136,9 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
   (org-export-with-smart-quotes t)
   ;; use zotero styles for csl exports
   (org-cite-csl-styles-dir (expand-file-name "~/Zotero/styles/"))
+  ;; use compact CSL citations for html exports
+  (org-cite-export-processors '((html csl "ieee.csl")
+                                (t basic)))
   ;; use id to insert link
   (org-id-link-to-org-use-id 'create-if-interactive)
   :config
@@ -1308,6 +1311,10 @@ https://lambdaland.org/posts/2024-08-19_fancy_eshell_prompt/#eshell-prompt."
 </script>"))
 
 ;; citation
+(use-package citeproc
+  :ensure t
+  :defer t)
+
 (use-package citar
   :ensure t
   :defer t
